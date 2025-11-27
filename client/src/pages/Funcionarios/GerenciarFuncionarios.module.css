@@ -1,0 +1,132 @@
+/* ======== LAYOUT GERAL ======== */
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.container-pagina {
+  display: flex;
+  background: #223773;
+  min-height: 100vh;
+  color: white;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60px;
+}
+
+/* ======== TÍTULO ======== */
+.titulo-pagina {
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+
+/* ======== BUSCA ======== */
+.search-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.search-box {
+  position: relative;
+  width: 520px; /* MAIS LARGO */
+}
+
+.search-box input {
+  width: 100%;
+  height: 38px;         /* MAIS BAIXO */
+  padding: 6px 14px 6px 40px;
+  border: none;
+  border-radius: 8px;
+  background: white;
+  color: #333;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+}
+
+.search-box svg {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: #777;
+}
+
+/* ======== TABELA ======== */
+.table-container {
+  width: 85%;
+  max-width: 950px;
+  background: #9b9b9b;
+  border-radius: 14px;
+ 
+  padding: 22px;
+}
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-container th {
+  text-align: left;
+  padding: 10px 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #000000;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.table-container td {
+  padding: 12px 6px;
+  font-size: 15px;
+  color: #000000;
+}
+
+.table-container tr:hover {
+  background: #2b4678;
+  transition: 0.2s;
+}
+
+/* ======== BOTÕES ======== */
+.botoes-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;          /* ESPAÇAMENTO EXATO! */
+  margin-top: 28px;
+}
+
+.btn {
+  padding: 10px 28px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.35);
+  transition: 0.2s ease-in-out;
+}
+
+.btn:hover {
+  transform: scale(1.04);
+  filter: brightness(1.1);
+}
+
+/* Cores exatas do Figma */
+.btn-novo {
+  background: #17a051;
+}
+
+.btn-editar {
+  background: #d6b100;
+  color: #000;
+}
+
+.btn-desativar {
+  background: #d64545;
+}

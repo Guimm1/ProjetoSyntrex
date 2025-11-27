@@ -1,0 +1,132 @@
+{
+  "usuarios": [
+    {
+      "id": "1",
+      "nome": "Gustavo",
+      "email": "gustavoblazechi@gmail.com",
+      "senha": "37",
+      "tipo": "Administrador",
+      "imagemUrl": "https://img.freepik.com/vetores-premium/icone-de-perfil-de-usuario-em-estilo-plano-ilustracao-em-vetor-avatar-membro-em-fundo-isolado-conceito-de-negocio-de-sinal-de-permissao-humana_157943-15752.jpg?semt=ais_hybrid&w=740&q=80"
+    },
+    {
+      "id": "2",
+      "nome": "Cristiano",
+      "email": "cristiano@gmail.com",
+      "senha": "7",
+      "tipo": "Gerente",
+      "imagemUrl": "https://conteudo.imguol.com.br/c/esporte/d6/2025/04/05/cristiano-ronaldo-durante-jogo-entre-al-hilal-e-al-nassr-no-campeonato-saudita-1743855177331_v2_450x450.jpg"
+    },
+    {
+      "id": "3",
+      "nome": "Goku",
+      "email": "goku@gmail.com",
+      "senha": "3",
+      "tipo": "Funcionário",
+      "imagemUrl": null
+    }
+  ],
+  "exames": [
+    {
+      "id": "629f",
+      "colaborador": "dadaw",
+      "nomeExame": "dadwd",
+      "descricao": "dadwad",
+      "validade": "4"
+    },
+    {
+      "id": "948d",
+      "colaborador": "guilherme",
+      "nomeExame": "de sangue",
+      "descricao": "fura e pega sangue",
+      "validade": "1"
+    },
+    {
+      "id": "16f9",
+      "colaborador": "aa",
+      "nomeExame": "aaaa",
+      "descricao": "sim",
+      "validade": "1"
+    },
+    {
+      "id": "f7b0",
+      "colaborador": "aaa",
+      "nomeExame": "aaaa",
+      "descricao": "aaaa",
+      "validade": "1"
+    },
+    {
+      "id": "51a9",
+      "colaborador": "aaaa",
+      "nomeExame": "aaaaaaaaaa",
+      "descricao": "aaaaaaaaaaa",
+      "validade": "1"
+    },
+    {
+      "id": "1978",
+      "colaborador": "a",
+      "nomeExame": "a",
+      "descricao": "a",
+      "validade": "1"
+    }
+  ],
+  "categorias": [
+    {
+      "id": "1",
+      "nome": "Saúde e Beleza"
+    }
+  ],
+  "funcionarios": [
+    {
+      "id": "fbce",
+      "nome": "Gustavo",
+      "matricula": "37444",
+      "funcao": "Dono"
+    },
+    {
+      "id": "5695",
+      "nome": "a",
+      "matricula": "a",
+      "funcao": "a"
+    }
+  ],
+  "treinamentos": [
+    {
+      "id": "2be6"
+    },
+    {
+      "id": "cd91",
+      "colaborador": "Gustavo",
+      "nomeTreinamento": "treino",
+      "descricao": "dificil",
+      "validade": "3"
+    },
+    {
+      "id": "f47a",
+      "colaborador": "aaaaaaaaaaaaaaaaaaaaa",
+      "nomeTreinamento": "bbbbbbbbbbbbb",
+      "descricao": "cccccccccccc",
+      "validade": "1"
+    },
+    {
+      "id": "2426",
+      "colaborador": "aaaaaaaaaaaaaaaaaaaaa",
+      "nomeTreinamento": "bbbbbbbbbbbbb",
+      "descricao": "cccccccccccc",
+      "validade": "1"
+    },
+    {
+      "id": "3463",
+      "colaborador": "aaasfecrewecrtttttttttttttttttttttttt",
+      "nomeTreinamento": "dsf",
+      "descricao": "dfgr",
+      "validade": "1"
+    },
+    {
+      "id": "4bed",
+      "colaborador": "teste ultimo",
+      "nomeTreinamento": "sim simmmm",
+      "descricao": "simmmm",
+      "validade": "10"
+    }
+  ]
+}
