@@ -58,7 +58,7 @@ export default function GerenciarTreinamentos() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.titulo}>Gerenciar treinamentos</h1>
+      <h1 className={styles.titulo}>Gerenciar treinamentos Oi</h1>
 
       <input
         type="text"
