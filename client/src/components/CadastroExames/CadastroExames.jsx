@@ -1,21 +1,95 @@
 import { useForm } from "react-hook-form";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { useCadastrarExame } from "../../hooks/useExames";
+import { useCadastrarExame, useEditarExames} from "../../hooks/useExames";
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const CadastroExames = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   const { CadastrarExame } = useCadastrarExame();
+  const { EditarExame } = useEditarExames();
+
+  const [carregando, setCarregando] = useState(false);
+  const [exame, setExame] = useState(null);  // <<< ADICIONADO
+
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    CadastrarExame(data);
-    alert("Exame cadastrado com sucesso!");
+   // Buscar dados do treinamento ANTES de montar o form
+   async function buscarExamePorId(id) {
+    try {
+      setCarregando(true);
+      const res = await fetch(`http://localhost:5000/exames/${id}`);
+      if (!res.ok) throw new Error("Erro ao buscar exame");
+      const dados = await res.json();
+      setExame(dados); // <<< SALVA O TREINAMENTO
+    } catch (error) {
+      alert("Erro ao carregar dados do exame para edição");
+    } finally {
+      setCarregando(false);
+    }
+  }
+
+  // Se existir ID → buscar dados para edição
+  useEffect(() => {
+    if (id) {
+      buscarExamePorId(id);
+    }
+  }, [id]);
+
+  // Quando os dados chegarem → preencher o form
+  useEffect(() => {
+    if (exame) {
+      reset(exame);
+    }
+  }, [exame, reset]);
+
+  // Ao salvar
+  const onSubmit = async (data) => {
+    if (id) {
+      const res = await EditarExame(id, data);
+      if (res) {
+        alert("Exame atualizado com sucesso!");
+        navigate("/exames/gerenciar");
+      } else {
+        alert("Erro ao atualizar exame");
+      }
+    } else {
+      const res = await CadastrarExame(data);
+      if (res) {
+        alert("Exame cadastrado com sucesso!");
+        navigate("/exames/gerenciar");
+      } else {
+        alert("Erro ao cadastrar exame");
+      }
+    }
   };
+
+  if (carregando) {
+    return (
+      <div
+        style={{
+          color: "white",
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#223773",
+          fontSize: "26px",
+        }}
+      >
+        Carregando...
+      </div>
+    );
+  }
 
   return (
     <div

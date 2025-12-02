@@ -133,7 +133,7 @@ const BarraNavegacao = () => {
                 {/* Opção 1 */}
                 <Nav.Link
                   as={NavLink}
-                  to="/exames"
+                  to="/exames/gerenciar"
                   className="text-black ps-4"
                 >
                   <LuClipboardCheck  className="fs-5" />
