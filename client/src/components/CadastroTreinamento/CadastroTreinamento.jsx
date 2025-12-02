@@ -1,21 +1,94 @@
 import { useForm } from "react-hook-form";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { useCadastrarTreinamentos } from "../../hooks/useTreinamentos";
+import { useCadastrarTreinamentos, useEditarTreinamentos } from "../../hooks/useTreinamentos";
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const CadastroTreinamento = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   const { CadastrarTreinamento } = useCadastrarTreinamentos();
+  const { EditarTreinamento } = useEditarTreinamentos();
+
+  const [carregando, setCarregando] = useState(false);
+  const [treinamento, setTreinamento] = useState(null);  // <<< ADICIONADO
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    CadastrarTreinamento(data);
-    alert("Treinamento cadastrado com sucesso!");
+  // Buscar dados do treinamento ANTES de montar o form
+  async function buscarTreinamentoPorId(id) {
+    try {
+      setCarregando(true);
+      const res = await fetch(`http://localhost:5000/treinamentos/${id}`);
+      if (!res.ok) throw new Error("Erro ao buscar treinamento");
+      const dados = await res.json();
+      setTreinamento(dados); // <<< SALVA O TREINAMENTO
+    } catch (error) {
+      alert("Erro ao carregar dados do treinamento para edição");
+    } finally {
+      setCarregando(false);
+    }
+  }
+
+  // Se existir ID → buscar dados para edição
+  useEffect(() => {
+    if (id) {
+      buscarTreinamentoPorId(id);
+    }
+  }, [id]);
+
+  // Quando os dados chegarem → preencher o form
+  useEffect(() => {
+    if (treinamento) {
+      reset(treinamento);
+    }
+  }, [treinamento, reset]);
+
+  // Ao salvar
+  const onSubmit = async (data) => {
+    if (id) {
+      const res = await EditarTreinamento(id, data);
+      if (res) {
+        alert("Treinamento atualizado com sucesso!");
+        navigate("/treinamentos/gerenciar");
+      } else {
+        alert("Erro ao atualizar treinamento");
+      }
+    } else {
+      const res = await CadastrarTreinamento(data);
+      if (res) {
+        alert("Treinamento cadastrado com sucesso!");
+        navigate("/treinamentos/gerenciar");
+      } else {
+        alert("Erro ao cadastrar treinamento");
+      }
+    }
   };
+
+  if (carregando) {
+    return (
+      <div
+        style={{
+          color: "white",
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#223773",
+          fontSize: "26px",
+        }}
+      >
+        Carregando...
+      </div>
+    );
+  }
 
   return (
     <div
@@ -43,11 +116,10 @@ const CadastroTreinamento = () => {
             fontWeight: "bold",
             fontSize: "36px",
             marginBottom: "50px",
-            marginLeft:"90px"
-           
+            marginLeft: "90px",
           }}
         >
-          Cadastrar Treinamento
+          {id ? "Editar Treinamento" : "Cadastrar Treinamento"}
         </h2>
 
         <Form
@@ -98,7 +170,7 @@ const CadastroTreinamento = () => {
             />
           </div>
 
-          {/* Campo: Nome do Exame */}
+          {/* Campo: Nome do Treinamento */}
           <div
             style={{
               display: "flex",
@@ -212,7 +284,6 @@ const CadastroTreinamento = () => {
             />
           </div>
 
-          {/* Botão SALVAR */}
           <Button
             type="submit"
             style={{
