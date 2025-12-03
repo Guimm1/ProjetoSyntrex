@@ -48,24 +48,18 @@ const GerenciarFuncionarios = () => {
   );
 
   return (
-    <div className={styles["container-pagina"]}>
-      <div className={styles["sidebar-placeholder"]} />
+    <div className={styles.container}>
+          <h1 className={styles.titulo}>Gerenciar treinamentos</h1>
+    
+          <input
+            type="text"
+            placeholder="Buscar colaborador..."
+            className={styles.busca}
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
+          />
 
-      <main className={styles["main-content"]}>
-        <h1 className={styles["titulo-pagina"]}>Gerenciar Funcionários</h1>
-
-        <div className={styles["search-wrapper"]}>
-          <div className={styles["search-box"]}>
-            <FiSearch size={18} />
-            <input
-              value={busca}
-              onChange={(e) => setBusca(e.target.value)}
-              placeholder="Buscar colaborador..."
-            />
-          </div>
-        </div>
-
-        <div className={styles["table-container"]}>
+        <div className={styles.tabela}>
           <table>
             <thead>
               <tr>
@@ -94,18 +88,17 @@ const GerenciarFuncionarios = () => {
           </table>
         </div>
 
-        <div className={styles["botoes-container"]}>
-          <button className={`${styles.btn} ${styles["btn-novo"]}`} onClick={handleNovo}>
+        <div className={styles.botoes}>
+          <button className={styles.cadastrar} onClick={handleNovo}>
             Cadastrar Novo
           </button>
-          <button className={`${styles.btn} ${styles["btn-editar"]}`} onClick={handleEditar}>
+          <button className={styles.editar} onClick={handleEditar}>
             Editar
           </button>
-          <button className={`${styles.btn} ${styles["btn-desativar"]}`} onClick={handleExcluir}>
+          <button className={styles.excluir} onClick={handleExcluir}>
             Desativar
           </button>
         </div>
-      </main>
     </div>
   );
 };
