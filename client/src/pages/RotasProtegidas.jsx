@@ -1,6 +1,6 @@
 import { Outlet, Navigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
-import syntrex2 from "../assets/syntrex2.png";
+import Syntrex from "../assets/Syntrex.svg";
 import { AuthContext } from "../contexts/UserContexts.jsx";
 import { useContext } from "react";
 import BarraNavegacao from "../components/BarraNavegacao/BarraNavegacao.jsx";

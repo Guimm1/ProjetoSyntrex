@@ -73,6 +73,18 @@
       "nome": "a",
       "matricula": "a",
       "funcao": "a"
+    },
+    {
+      "id": "d0b2",
+      "nome": "Martelo",
+      "matricula": "25140",
+      "funcao": "Tene"
+    },
+    {
+      "id": "5760",
+      "nome": "Serra ",
+      "matricula": "25140",
+      "funcao": "Tene"
     }
   ],
   "treinamentos": [
