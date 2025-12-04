@@ -41,8 +41,9 @@ export default function GerenciarFuncionarios() {
     setSelecionado(null);
   };
 
+  // CORREÇÃO AQUI: trocado colaborador → nome
   const filtrados = funcionarios.filter((f) =>
-    f.colaborador?.toLowerCase()?.includes(busca.toLowerCase())
+    f.nome?.toLowerCase()?.includes(busca.toLowerCase())
   );
 
   return (
@@ -80,8 +81,6 @@ export default function GerenciarFuncionarios() {
               <td>{f.nome || "—"}</td>
               <td>{f.funcao || "—"}</td>
               <td>{f.matricula || "—"}</td>
-              <td>
-              </td>
             </tr>
           ))}
         </tbody>
