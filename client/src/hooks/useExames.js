@@ -10,7 +10,7 @@ export function useListaExames() {
   useEffect(() => {
     async function fetchExames() {
       try {
-        const req = await fetch(`${url}/exames`);
+        const req = await fetch(`${url}/atribuicaoexames`);
         const res = await req.json();
         setExames(res);
       } catch (erro) {
@@ -25,23 +25,23 @@ export function useListaExames() {
 
 
 // ✅ CADASTRAR EXAME (corrigido)
-export function useCadastrarExame() {
-  const CadastrarExame = async (data) => {
+export function useAtribuirExame() {
+  const AtribuirExame = async (data) => {
     try {
       // Alterado de /cadastroexame → /exames (rota do json-server)
-      const req = await fetch(`${url}/exames`, {
+      const req = await fetch(`${url}/atribuicaoexames`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
       if (!req.ok) {
-        console.error("Erro ao cadastrar exame:", req.status);
+        console.error("Erro ao atribuir exame:", req.status);
         return;
       }
 
       const res = await req.json();
-      console.log(" Exame cadastrado com sucesso:", res);
+      console.log(" Exame atribuido com sucesso:", res);
 
       return res;
     } catch (erro) {
@@ -49,14 +49,14 @@ export function useCadastrarExame() {
     }
   };
 
-  return { CadastrarExame };
+  return { AtribuirExame };
 }
 
 // EDITAR TREINAMENTO
 export function useEditarExames() {
   const EditarExame = async (id, data) => {
     try {
-      const req = await fetch(`${url}/exames/${id}`, {
+      const req = await fetch(`${url}/atribuicaoexames/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -82,7 +82,7 @@ export function useEditarExames() {
 export function useExcluirExames() {
   const ExcluirExame = async (id) => {
     try {
-      const req = await fetch(`${url}/exames/${id}`, {
+      const req = await fetch(`${url}/atribuicaoexames/${id}`, {
         method: "DELETE",
       });
 

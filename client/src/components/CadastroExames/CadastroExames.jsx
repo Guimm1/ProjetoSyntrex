@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { useCadastrarExame, useEditarExames} from "../../hooks/useExames";
+import { useAtribuirExame, useEditarExames} from "../../hooks/useExames";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -9,7 +9,7 @@ const CadastroExames = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { CadastrarExame } = useCadastrarExame();
+  const { AtribuirExame } = useAtribuirExame();
   const { EditarExame } = useEditarExames();
 
   const [carregando, setCarregando] = useState(false);
@@ -27,7 +27,7 @@ const CadastroExames = () => {
    async function buscarExamePorId(id) {
     try {
       setCarregando(true);
-      const res = await fetch(`http://localhost:5000/exames/${id}`);
+      const res = await fetch(`http://localhost:5000/atribuicaoexames/${id}`);
       if (!res.ok) throw new Error("Erro ao buscar exame");
       const dados = await res.json();
       setExame(dados); // <<< SALVA O TREINAMENTO
@@ -63,12 +63,12 @@ const CadastroExames = () => {
         alert("Erro ao atualizar exame");
       }
     } else {
-      const res = await CadastrarExame(data);
+      const res = await AtribuirExame(data);
       if (res) {
-        alert("Exame cadastrado com sucesso!");
+        alert("Exame atribuido com sucesso!");
         navigate("/exames/gerenciar");
       } else {
-        alert("Erro ao cadastrar exame");
+        alert("Erro ao Atribuir exame");
       }
     }
   };
@@ -121,8 +121,9 @@ const CadastroExames = () => {
             marginBottom:"50px"
            
           }}
+
         >
-          Cadastrar Exame
+        Atribuir Exame
         </h2>
 
         <Form

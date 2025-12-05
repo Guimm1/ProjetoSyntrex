@@ -122,7 +122,7 @@ const BarraNavegacao = () => {
           </Accordion.Item>
           {/* fim produtos */}
 
-          {/* Páginas cliente */}
+          {/* Páginas Exames */}
           <Accordion.Item eventKey="1" className="bg-white text-black">
             <Accordion.Header className={styles.accordionHeader}>
               <LuClipboardList className="fs-4" />
@@ -142,11 +142,11 @@ const BarraNavegacao = () => {
                 {/* Opção 2 */}
                 <Nav.Link
                   as={NavLink}
-                  to="/exames/cadastrar"
+                  to="/exames/atribuir"
                   className="text-black ps-4"
                 >
                   <LuClipboardPlus className="fs-5" />
-                  <span className="ms-2"> Cadastrar </span>
+                  <span className="ms-2"> Atribuir </span>
                 </Nav.Link>
               </Nav>
             </Accordion.Body>
@@ -154,7 +154,7 @@ const BarraNavegacao = () => {
           {/* fim cliente */}
 
           
-          {/* Páginas Pedidos */}
+          {/* Páginas Treinamentos */}
           <Accordion.Item eventKey="3" className="bg-white text-black">
             <Accordion.Header className={styles.accordionHeader}>
               <LiaChalkboardTeacherSolid className="fs-4" />

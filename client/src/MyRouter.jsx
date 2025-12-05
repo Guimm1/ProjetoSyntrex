@@ -8,6 +8,7 @@ import Home from "./pages/Home.jsx";
 
 import CadastrarExames from "./pages/Exames/CadastrarExames.jsx";
 import GerenciarExames from "./pages/Exames/GerenciarExames.jsx";
+import AtribuirExames from "./pages/Exames/AtribuirExames.jsx";
 import CadastrarFuncionarios from "./pages/Funcionarios/CadastrarFuncionarios.jsx";
 import GerenciarTreinamentos from "./pages/Treinamentos/GerenciarTreinamentos.jsx";
 import CadastrarTreinamentos from "./pages/Treinamentos/CadastrarTreinamentos.jsx";
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
       { path: "exames/cadastrar", element: <CadastrarExames /> },
       { path: "exames/gerenciar", element: <GerenciarExames /> },
       { path: "exames/editar/:id", element: <CadastrarExames /> },
+      { path: "exames/atribuir", element: <AtribuirExames /> },
 
       // TREINAMENTOS
       { path: "treinamentos/cadastrar", element: <CadastrarTreinamentos /> },
