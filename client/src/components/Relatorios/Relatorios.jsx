@@ -9,6 +9,7 @@ const Relatorios = () => {
   const [exames, setExames] = useState([]);
   const [treinamentos, setTreinamentos] = useState([]);
   const [busca, setBusca] = useState("");
+  const [activeFilter, setActiveFilter] = useState("todos"); // 'todos' | 'ativos' | 'desativados'
 
   // ==== CARREGAR DADOS ===================================================
   useEffect(() => {
@@ -39,7 +40,8 @@ const Relatorios = () => {
           treinamento: "—",
           exame: exame.nomeExame,
           validade: exame.validade,
-          status: computeStatus(exame)
+          status: computeStatus(exame),
+          active: exame.active === undefined ? true : exame.active
         });
     });
 
@@ -56,7 +58,8 @@ const Relatorios = () => {
           treinamento: trein.nomeTreinamento,
           exame: "—",
           validade: trein.validade,
-          status: computeStatus(trein)
+          status: computeStatus(trein),
+          active: trein.active === undefined ? true : trein.active
         });
     });
 
@@ -64,9 +67,24 @@ const Relatorios = () => {
   }, [funcionarios, exames, treinamentos]);
 
   // ==== FILTRO ============================================================
-  const filtrado = dados.filter(item =>
-    item.nome.toLowerCase().includes(busca.toLowerCase())
-  );
+  const filtrado = dados.filter(item => {
+    const q = (busca || "").trim().toLowerCase();
+
+    // se não houver query, passa por todos (aplica apenas filtro active)
+    const matchQuery = !q || [
+      item.nome,
+      item.funcao,
+      item.exame,
+      item.treinamento,
+    ].some((f) => String(f || "").toLowerCase().includes(q));
+
+    if (!matchQuery) return false;
+
+    if (activeFilter === "todos") return true;
+    if (activeFilter === "ativos") return item.active !== false;
+    if (activeFilter === "desativados") return item.active === false;
+    return true;
+  });
 
   // ==== EXPORTAR CSV ======================================================
   const exportarExcel = () => {
@@ -96,10 +114,18 @@ const Relatorios = () => {
           <input
             type="text"
             className={styles.search}
-            placeholder="Buscar colaborador..."
+            placeholder="Buscar por nome, função, exame ou treinamento..."
             value={busca}
             onChange={e => setBusca(e.target.value)}
           />
+          <div style={{ marginLeft: 12 }}>
+            <label style={{ marginRight: 8, color: '#223773', fontWeight: 600 }}>Mostrar:</label>
+            <select value={activeFilter} onChange={e => setActiveFilter(e.target.value)} style={{ padding: 8, borderRadius: 6 }}>
+              <option value="todos">Todos</option>
+              <option value="ativos">Apenas Ativos</option>
+              <option value="desativados">Desativados</option>
+            </select>
+          </div>
         </div>
 
         <div className={styles.tableCard}>

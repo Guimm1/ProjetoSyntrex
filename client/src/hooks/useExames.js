@@ -101,6 +101,50 @@ export function useEditarExames() {
   return { EditarExame };
 }
 
+// LISTAR TODOS EXAMES (inclui desativados)
+export function useListaExamesTodos() {
+  const [exames, setExames] = useState([]);
+
+  useEffect(() => {
+    async function fetchExames() {
+      try {
+        const req = await fetch(`${url}/exames`);
+        const res = await req.json();
+        setExames(res);
+      } catch (erro) {
+        console.log("Erro ao carregar exames (todos):", erro.message);
+      }
+    }
+    fetchExames();
+  }, []);
+
+  return exames;
+}
+
+// REATIVAR EXAME
+export function useReativarExames() {
+  const ReativarExame = async (id) => {
+    try {
+      const req = await fetch(`${url}/exames/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ active: true }),
+      });
+
+      if (!req.ok) {
+        console.error("Erro ao reativar exame:", req.status);
+        return;
+      }
+
+      console.log(`Exame ${id} reativado com sucesso`);
+    } catch (erro) {
+      console.error("Erro ao reativar:", erro.message);
+    }
+  };
+
+  return { ReativarExame };
+}
+
 // EXCLUIR UM TREINAMENTO
 export function useExcluirExames() {
   const ExcluirExame = async (id) => {

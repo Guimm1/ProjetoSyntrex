@@ -27,32 +27,266 @@
   ],
   "exames": [
     {
-      "id": "629f",
-      "colaborador": "dadaw",
-      "nomeExame": "dadwd",
-      "descricao": "dadwad",
-      "validade": "4"
+      "id": "8b13",
+      "colaborador": "Guilherme Galvao",
+      "nomeExame": "Anemia",
+      "descricao": "exame",
+      "validade": "1",
+      "funcao": "Operador",
+      "active": false
     },
     {
-      "id": "948d",
-      "colaborador": "guilherme",
-      "nomeExame": "de sangue",
-      "descricao": "fura e pega sangue",
-      "validade": "1"
+      "id": "d7bf",
+      "colaborador": "Guilherme Galvao",
+      "nomeExame": "Exame Admissional",
+      "descricao": "Admissao",
+      "validade": "1",
+      "funcao": "Operador",
+      "status": "PRÓX DO VENCIMENTO"
+    }
+  ],
+  "categoriasExames": [
+    {
+      "id": "1",
+      "nome": "Exame Admissional"
     },
     {
-      "id": "f7b0",
-      "colaborador": "a",
-      "nomeExame": "a",
-      "descricao": "a",
-      "validade": "4"
+      "id": "2",
+      "nome": "Exame Periódico"
     },
     {
-      "id": "1978",
-      "colaborador": "Gustavo",
-      "nomeExame": "Prostata",
-      "descricao": "a",
-      "validade": "5"
+      "id": "3",
+      "nome": "Exame de Retorno"
+    },
+    {
+      "id": "4",
+      "nome": "Exame de Mudança de Função"
+    },
+    {
+      "id": "5",
+      "nome": "Hemograma"
+    },
+    {
+      "id": "6",
+      "nome": "Glicemia"
+    },
+    {
+      "id": "7",
+      "nome": "Colesterol"
+    },
+    {
+      "id": "8",
+      "nome": "Triglicerídeos"
+    },
+    {
+      "id": "9",
+      "nome": "Creatinina"
+    },
+    {
+      "id": "10",
+      "nome": "AST/ALT"
+    },
+    {
+      "id": "11",
+      "nome": "Eletrocardiograma"
+    },
+    {
+      "id": "12",
+      "nome": "Radiografia Torácica"
+    },
+    {
+      "id": "13",
+      "nome": "Teste de Audição"
+    },
+    {
+      "id": "14",
+      "nome": "Teste de Visão"
+    },
+    {
+      "id": "15",
+      "nome": "Espirometria"
+    },
+    {
+      "id": "16",
+      "nome": "Urina"
+    },
+    {
+      "id": "17",
+      "nome": "Pressão Arterial"
+    },
+    {
+      "id": "18",
+      "nome": "IMC"
+    },
+    {
+      "id": "19",
+      "nome": "Sorologias"
+    },
+    {
+      "id": "20",
+      "nome": "Ácido Úrico"
+    },
+    {
+      "id": "21",
+      "nome": "TSH"
+    },
+    {
+      "id": "22",
+      "nome": "Teste Ergométrico"
+    },
+    {
+      "id": "23",
+      "nome": "Ultrassonografia"
+    },
+    {
+      "id": "24",
+      "nome": "Ressonância Magnética"
+    },
+    {
+      "id": "25",
+      "nome": "Tomografia"
+    },
+    {
+      "id": "26",
+      "nome": "Endoscopia"
+    },
+    {
+      "id": "27",
+      "nome": "Colonoscopia"
+    },
+    {
+      "id": "28",
+      "nome": "Teste Neuropsicológico"
+    },
+    {
+      "id": "29",
+      "nome": "Avaliação Postural"
+    },
+    {
+      "id": "30",
+      "nome": "Teste de Força Muscular"
+    }
+  ],
+  "categoriasTrainamentos": [
+    {
+      "id": "1",
+      "nome": "NR01 - Disposições Gerais"
+    },
+    {
+      "id": "2",
+      "nome": "NR04 - Serviços Especializados em Segurança"
+    },
+    {
+      "id": "3",
+      "nome": "NR05 - Comissão Interna de Prevenção de Acidentes"
+    },
+    {
+      "id": "4",
+      "nome": "NR06 - Equipamento de Proteção Individual"
+    },
+    {
+      "id": "5",
+      "nome": "NR10 - Segurança em Instalações e Serviços com Eletricidade"
+    },
+    {
+      "id": "6",
+      "nome": "NR11 - Transporte, Movimentação, Armazenagem e Manipulação de Materiais"
+    },
+    {
+      "id": "7",
+      "nome": "NR12 - Segurança do Trabalho em Máquinas e Equipamentos"
+    },
+    {
+      "id": "8",
+      "nome": "NR13 - Caldeiras, Vasos de Pressão e Tubulações"
+    },
+    {
+      "id": "9",
+      "nome": "NR15 - Atividades e Operações Insalubres"
+    },
+    {
+      "id": "10",
+      "nome": "NR16 - Atividades e Operações Perigosas"
+    },
+    {
+      "id": "11",
+      "nome": "NR17 - Ergonomia"
+    },
+    {
+      "id": "12",
+      "nome": "NR18 - Condições e Meio Ambiente de Trabalho na Construção"
+    },
+    {
+      "id": "13",
+      "nome": "NR20 - Segurança e Saúde no Trabalho com Inflamáveis e Combustíveis"
+    },
+    {
+      "id": "14",
+      "nome": "NR21 - Trabalho a Céu Aberto"
+    },
+    {
+      "id": "15",
+      "nome": "NR23 - Proteção Contra Incêndios"
+    },
+    {
+      "id": "16",
+      "nome": "NR25 - Resíduos Industriais"
+    },
+    {
+      "id": "17",
+      "nome": "NR26 - Sinalização de Segurança"
+    },
+    {
+      "id": "18",
+      "nome": "NR28 - Fiscalização e Penalidades"
+    },
+    {
+      "id": "19",
+      "nome": "NR30 - Segurança e Saúde no Trabalho Portuário"
+    },
+    {
+      "id": "20",
+      "nome": "NR32 - Segurança e Saúde no Trabalho em Serviços de Saúde"
+    },
+    {
+      "id": "21",
+      "nome": "NR33 - Segurança e Saúde nos Trabalhos em Espaços Confinados"
+    },
+    {
+      "id": "22",
+      "nome": "NR34 - Condições e Meio Ambiente de Trabalho na Indústria da Construção"
+    },
+    {
+      "id": "23",
+      "nome": "NR35 - Trabalho em Altura"
+    },
+    {
+      "id": "24",
+      "nome": "Primeiros Socorros"
+    },
+    {
+      "id": "25",
+      "nome": "Combate a Incêndio"
+    },
+    {
+      "id": "26",
+      "nome": "Gestão de Segurança"
+    },
+    {
+      "id": "27",
+      "nome": "Comunicação e Liderança"
+    },
+    {
+      "id": "28",
+      "nome": "Sistema de Gestão Ambiental"
+    },
+    {
+      "id": "29",
+      "nome": "Treinamento de Integração"
+    },
+    {
+      "id": "30",
+      "nome": "Treinamento de Reciclagem"
     }
   ],
   "categorias": [
@@ -63,22 +297,16 @@
   ],
   "funcionarios": [
     {
-      "id": "fbce",
-      "nome": "Gustavo",
-      "matricula": "37444",
-      "funcao": "Dono"
+      "id": "3ceb",
+      "nome": "Guilherme Galvao",
+      "matricula": "1234",
+      "funcao": "Operador"
     },
     {
-      "id": "5695",
-      "nome": "a",
-      "matricula": "a",
-      "funcao": "a"
-    },
-    {
-      "id": "d0b2",
-      "nome": "Martelo",
-      "matricula": "25140",
-      "funcao": "Tene"
+      "id": "c063",
+      "nome": "Guilherme Galvao",
+      "matricula": "1233",
+      "funcao": "Gestor"
     }
   ],
   "treinamentos": [
@@ -86,39 +314,23 @@
       "id": "2be6"
     },
     {
-      "id": "cd91",
-      "colaborador": "Gustavo",
-      "nomeTreinamento": "treino",
-      "descricao": "dificil",
-      "validade": "3"
+      "id": "2d67",
+      "colaborador": "Guilherme Galvao",
+      "nomeTreinamento": "NR13 - Caldeiras, Vasos de Pressão e Tubulações",
+      "descricao": "NR",
+      "validade": "1",
+      "funcao": "Operador",
+      "status": "CONCLUIDO",
+      "active": false
     },
     {
-      "id": "f47a",
-      "colaborador": "aaaaaaaaaaaaaaaaaaaaa",
-      "nomeTreinamento": "bbbbbbbbbbbbb",
-      "descricao": "cccccccccccc",
-      "validade": "1"
-    },
-    {
-      "id": "2426",
-      "colaborador": "aaaaaaaaaaaaaaaaaaaaa",
-      "nomeTreinamento": "bbbbbbbbbbbbb",
-      "descricao": "cccccccccccc",
-      "validade": "1"
-    },
-    {
-      "id": "3463",
-      "colaborador": "aaasfecrewecrtttttttttttttttttttttttt",
-      "nomeTreinamento": "dsf",
-      "descricao": "dfgr",
-      "validade": "1"
-    },
-    {
-      "id": "4bed",
-      "colaborador": "teste ultimo",
-      "nomeTreinamento": "sim simmmm",
-      "descricao": "simmmm",
-      "validade": "10"
+      "id": "1071",
+      "colaborador": "Guilherme Galvao",
+      "nomeTreinamento": "NR10 - Segurança em Instalações e Serviços com Eletricidade",
+      "descricao": "nr10",
+      "validade": "1",
+      "funcao": "Operador",
+      "status": "PENDENTE"
     }
   ]
 }

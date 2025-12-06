@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useListaTreinamentos, useExcluirTreinamentos } from "../../hooks/useTreinamentos";
+import { useListaTreinamentos, useExcluirTreinamentos, useListaTreinamentosTodos, useReativarTreinamentos } from "../../hooks/useTreinamentos";
 import { useNavigate } from "react-router-dom";
 import styles from "./GerenciarTreinamentos.module.css";
 import computeStatus from "../../utils/computeStatus";
@@ -8,16 +8,24 @@ export default function GerenciarTreinamentos() {
   const navigate = useNavigate();
 
   const listaTreinamentos = useListaTreinamentos();
+  const listaTreinamentosTodos = useListaTreinamentosTodos();
   const { ExcluirTreinamento } = useExcluirTreinamentos();
+  const { ReativarTreinamento } = useReativarTreinamentos();
 
   const [treinamentos, setTreinamentos] = useState([]);
   const [busca, setBusca] = useState("");
   const [selecionado, setSelecionado] = useState(null);
+  const [viewMode, setViewMode] = useState("ativos"); // 'ativos' | 'desativados'
 
-  // quando a lista mudar, atualiza
+  // quando a lista mudar, atualiza dependendo do modo
   useEffect(() => {
-    setTreinamentos(listaTreinamentos);
-  }, [listaTreinamentos]);
+    if (viewMode === "ativos") setTreinamentos(listaTreinamentos);
+    else {
+      // filtrar apenas os desativados
+      setTreinamentos((listaTreinamentosTodos || []).filter((t) => t.active === false));
+    }
+    setSelecionado(null);
+  }, [listaTreinamentos, listaTreinamentosTodos, viewMode]);
 
   const editar = () => {
     if (!selecionado) {
@@ -30,17 +38,26 @@ export default function GerenciarTreinamentos() {
 
   const excluir = async () => {
     if (!selecionado) {
-      alert("Selecione um item para desativar.");
+      alert(`Selecione um item para ${viewMode === "ativos" ? "desativar" : "reativar"}.`);
       return;
     }
 
-    if (!confirm("Tem certeza que quer desativar este treinamento?")) return;
+    if (viewMode === "ativos") {
+      if (!confirm("Tem certeza que quer desativar este treinamento?")) return;
 
-    await ExcluirTreinamento(selecionado);
+      await ExcluirTreinamento(selecionado);
 
-    // Remover da lista de gerenciamento (mantém no banco para relatórios)
-    setTreinamentos(treinamentos.filter((t) => t.id !== selecionado));
-    setSelecionado(null);
+      // Remover da lista de gerenciamento (mantém no banco para relatórios)
+      setTreinamentos(treinamentos.filter((t) => t.id !== selecionado));
+      setSelecionado(null);
+    } else {
+      // reativar
+      if (!confirm("Deseja reativar este treinamento?")) return;
+      await ReativarTreinamento(selecionado);
+      // remover da lista de desativados para não aparecer mais
+      setTreinamentos(treinamentos.filter((t) => t.id !== selecionado));
+      setSelecionado(null);
+    }
   };
 
   const filtrados = treinamentos.filter((t) =>
@@ -71,6 +88,14 @@ export default function GerenciarTreinamentos() {
         value={busca}
         onChange={(e) => setBusca(e.target.value)}
       />
+
+      <div style={{ marginTop: 12, marginBottom: 18 }}>
+        <label style={{ color: "white", marginRight: 8 }}>Ver:</label>
+        <select value={viewMode} onChange={(e) => setViewMode(e.target.value)} style={{ padding: 8, borderRadius: 6 }}>
+          <option value="ativos">Apenas Ativos</option>
+          <option value="desativados">Desativados</option>
+        </select>
+      </div>
 
       <table className={styles.tabela}>
         <thead>

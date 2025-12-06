@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useListaExames, useExcluirExames } from "../../hooks/useExames";
+import { useListaExames, useExcluirExames, useListaExamesTodos, useReativarExames } from "../../hooks/useExames";
 import { useListaFuncionarios } from "../../hooks/useFuncionarios";
 import { useNavigate } from "react-router-dom";
 import styles from "./GerenciarExames.module.css";
@@ -9,17 +9,22 @@ export default function GerenciarExames() {
   const navigate = useNavigate();
 
   const listaExames = useListaExames();
+  const listaExamesTodos = useListaExamesTodos();
   const funcionarios = useListaFuncionarios();
   const { ExcluirExame } = useExcluirExames();
+  const { ReativarExame } = useReativarExames();
 
   const [exames, setExames] = useState([]);
   const [busca, setBusca] = useState("");
   const [selecionado, setSelecionado] = useState(null);
+  const [viewMode, setViewMode] = useState("ativos");
 
-  // quando a lista mudar, atualiza
+  // quando a lista mudar, atualiza dependendo do modo
   useEffect(() => {
-    setExames(listaExames);
-  }, [listaExames]);
+    if (viewMode === "ativos") setExames(listaExames);
+    else setExames((listaExamesTodos || []).filter((e) => e.active === false));
+    setSelecionado(null);
+  }, [listaExames, listaExamesTodos, viewMode]);
 
   const editar = () => {
     if (!selecionado) {
@@ -32,17 +37,21 @@ export default function GerenciarExames() {
 
   const excluir = async () => {
     if (!selecionado) {
-      alert("Selecione um item para desativar.");
+      alert(`Selecione um item para ${viewMode === "ativos" ? "desativar" : "reativar"}.`);
       return;
     }
 
-    if (!confirm("Tem certeza que quer desativar este exame?")) return;
-
-    await ExcluirExame(selecionado);
-
-    // Remover da lista de gerenciamento (mantém no banco para relatórios)
-    setExames(exames.filter((e) => e.id !== selecionado));
-    setSelecionado(null);
+    if (viewMode === "ativos") {
+      if (!confirm("Tem certeza que quer desativar este exame?")) return;
+      await ExcluirExame(selecionado);
+      setExames(exames.filter((e) => e.id !== selecionado));
+      setSelecionado(null);
+    } else {
+      if (!confirm("Deseja reativar este exame?")) return;
+      await ReativarExame(selecionado);
+      setExames(exames.filter((e) => e.id !== selecionado));
+      setSelecionado(null);
+    }
   };
 
   const filtrados = exames.filter((e) =>
@@ -83,6 +92,14 @@ export default function GerenciarExames() {
         value={busca}
         onChange={(e) => setBusca(e.target.value)}
       />
+
+      <div style={{ marginTop: 12, marginBottom: 18 }}>
+        <label style={{ color: "white", marginRight: 8 }}>Ver:</label>
+        <select value={viewMode} onChange={(e) => setViewMode(e.target.value)} style={{ padding: 8, borderRadius: 6 }}>
+          <option value="ativos">Apenas Ativos</option>
+          <option value="desativados">Desativados</option>
+        </select>
+      </div>
 
       <table className={styles.tabela}>
         <thead>

@@ -101,6 +101,51 @@ export function useEditarTreinamentos() {
   return { EditarTreinamento };
 }
 
+// LISTAR TODOS TREINAMENTOS (inclui desativados) - útil para reativação
+export function useListaTreinamentosTodos() {
+  const [treinamentos, setTreinamentos] = useState([]);
+
+  useEffect(() => {
+    async function fetchTreinamentos() {
+      try {
+        const req = await fetch(`${url}/treinamentos`);
+        const res = await req.json();
+        setTreinamentos(res);
+      } catch (erro) {
+        console.log("Erro ao carregar treinamentos (todos):", erro.message);
+      }
+    }
+
+    fetchTreinamentos();
+  }, []);
+
+  return treinamentos;
+}
+
+// REATIVAR TREINAMENTO (set active: true)
+export function useReativarTreinamentos() {
+  const ReativarTreinamento = async (id) => {
+    try {
+      const req = await fetch(`${url}/treinamentos/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ active: true }),
+      });
+
+      if (!req.ok) {
+        console.error("Erro ao reativar treinamento:", req.status);
+        return;
+      }
+
+      console.log(`Treinamento ${id} reativado com sucesso`);
+    } catch (erro) {
+      console.error("Erro ao reativar:", erro.message);
+    }
+  };
+
+  return { ReativarTreinamento };
+}
+
 // EXCLUIR UM TREINAMENTO
 export function useExcluirTreinamentos() {
   const ExcluirTreinamento = async (id) => {
