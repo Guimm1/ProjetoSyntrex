@@ -8,12 +8,13 @@ import { useEffect, useState } from "react";
 const CadastroExames = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
   const { AtribuirExame } = useAtribuirExame();
   const { EditarExame } = useEditarExames();
-
+  const [mensagem, setMensagem] = useState(null);
+  const [funcionarios, setFuncionarios] = useState([]);
+  const [exames, setExames] = useState([]);
   const [carregando, setCarregando] = useState(false);
-  const [exame, setExame] = useState(null);  // <<< ADICIONADO
+  const [atribuirexame, setAtribuirExame] = useState(null);
 
 
   const {
@@ -30,13 +31,51 @@ const CadastroExames = () => {
       const res = await fetch(`http://localhost:5000/atribuicaoexames/${id}`);
       if (!res.ok) throw new Error("Erro ao buscar exame");
       const dados = await res.json();
-      setExame(dados); // <<< SALVA O TREINAMENTO
+      setAtribuirExame(dados); // <<< SALVA O TREINAMENTO
     } catch (error) {
       alert("Erro ao carregar dados do exame para edição");
     } finally {
       setCarregando(false);
     }
   }
+
+  useEffect(() => {
+    const fetchFuncionarios = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/funcionarios');
+        if (!response.ok) {
+          throw new Error('Erro ao buscar produtos');
+        }
+        const data = await response.json();
+        setFuncionarios(data);
+        setCarregando(false);
+      } catch (error) {
+        console.error('Erro:', error);
+        setMensagem({ type: 'danger', text: 'Falha ao carregar a lista de produtos.' });
+        setCarregando(false);
+      }
+    };
+    fetchFuncionarios();
+  }, []);
+
+  useEffect(() => {
+    const fetchExames = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/exames');
+        if (!response.ok) {
+          throw new Error('Erro ao buscar produtos');
+        }
+        const data = await response.json();
+        setExames(data);
+        setCarregando(false);
+      } catch (error) {
+        console.error('Erro:', error);
+        setMensagem({ type: 'danger', text: 'Falha ao carregar a lista de produtos.' });
+        setCarregando(false);
+      }
+    };
+    fetchExames();
+  }, []);
 
   // Se existir ID → buscar dados para edição
   useEffect(() => {
@@ -47,10 +86,10 @@ const CadastroExames = () => {
 
   // Quando os dados chegarem → preencher o form
   useEffect(() => {
-    if (exame) {
-      reset(exame);
+    if (atribuirexame) {
+      reset(atribuirexame);
     }
-  }, [exame, reset]);
+  }, [atribuirexame, reset]);
 
   // Ao salvar
   const onSubmit = async (data) => {
@@ -156,22 +195,29 @@ const CadastroExames = () => {
             >
               Nome do colaborador
             </Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Buscar colaborador ou Matrícula"
-              {...register("colaborador", { required: true })}
-              style={{
-                flex: "1",
-                height: "50px",
-                fontSize: "16px",
-                borderRadius: "8px",
-                border: "1px solid #fff",
-                padding: "10px 14px",
-                backgroundColor: "white",
-                color: "#000",
-                width: "100%",
-              }}
-            />
+            <Form.Select
+                {...register('funcionarioId', { required: 'A seleção do colaborador é obrigatória' })}
+                isInvalid={!!errors.produtoId}
+
+                style={{
+                  flex: "1",
+                  height: "50px",
+                  fontSize: "16px",
+                  borderRadius: "8px",
+                  border: "1px solid #fff",
+                  padding: "10px 14px",
+                  backgroundColor: "white",
+                  color: "#000",
+                  width: "100%",
+                }}
+              >
+                <option value="">Selecione um Funcionário</option>
+                {funcionarios.map(funcionarios => (
+                  <option key={funcionarios.id} value={funcionarios.id}>
+                    {funcionarios.nome}
+                  </option>
+                ))}
+              </Form.Select>
           </div>
 
           {/* Campo: Nome do Exame */}
@@ -195,21 +241,29 @@ const CadastroExames = () => {
             >
               Nome do Exame
             </Form.Label>
-            <Form.Control
-              type="text"
-              {...register("nomeExame", { required: true })}
-              style={{
-                flex: "1",
-                height: "50px",
-                fontSize: "16px",
-                borderRadius: "8px",
-                border: "1px solid #fff",
-                padding: "10px 14px",
-                backgroundColor: "white",
-                color: "#000",
-                width: "100%",
-              }}
-            />
+            <Form.Select
+                {...register('exameId', { required: 'A seleção do exame é obrigatória' })}
+                isInvalid={!!errors.produtoId}
+
+                style={{
+                  flex: "1",
+                  height: "50px",
+                  fontSize: "16px",
+                  borderRadius: "8px",
+                  border: "1px solid #fff",
+                  padding: "10px 14px",
+                  backgroundColor: "white",
+                  color: "#000",
+                  width: "100%",
+                }}
+              >
+                <option value="">Selecione um Exame</option>
+                {exames.map(exames => (
+                  <option key={exames.id} value={exames.id}>
+                    {exames.nome}
+                  </option>
+                ))}
+              </Form.Select>
           </div>
 
           {/* Campo: Descrição */}

@@ -26,7 +26,7 @@ const CadastroTreinamento = () => {
   async function buscarTreinamentoPorId(id) {
     try {
       setCarregando(true);
-      const res = await fetch(`http://localhost:5000/treinamentos/${id}`);
+      const res = await fetch(`http://localhost:5000/atribuicaotreinamentos/${id}`);
       if (!res.ok) throw new Error("Erro ao buscar treinamento");
       const dados = await res.json();
       setTreinamento(dados); // <<< SALVA O TREINAMENTO

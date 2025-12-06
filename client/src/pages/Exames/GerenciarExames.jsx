@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react";
-import { useListaExames, useExcluirExames } from "../../hooks/useExames";
+import { useListaAtribuirExames, useExcluirExames } from "../../hooks/useExames";
 import { useNavigate } from "react-router-dom";
 import styles from "./GerenciarExames.module.css";
 
 export default function GerenciarExames() {
   const navigate = useNavigate();
 
-  const listaExames = useListaExames();
+  const listaAtribuirExames = useListaAtribuirExames();
   const { ExcluirExame } = useExcluirExames();
 
-  const [exames, setExames] = useState([]);
+  const [atribuirexames, setAtribuirExames] = useState([]);
   const [busca, setBusca] = useState("");
   const [selecionado, setSelecionado] = useState(null);
 
   // quando a lista mudar, atualiza
   useEffect(() => {
-    setExames(listaExames);
-  }, [listaExames]);
+    setAtribuirExames(listaAtribuirExames);
+  }, [listaAtribuirExames]);
 
   const editar = () => {
     if (!selecionado) {
@@ -37,11 +37,11 @@ export default function GerenciarExames() {
 
     await ExcluirExame(selecionado);
 
-    setExames(exames.filter((e) => e.id !== selecionado));
+    setAtribuirExames(atribuirexames.filter((e) => e.id !== selecionado));
     setSelecionado(null);
   };
 
-  const filtrados = exames.filter((e) =>
+  const filtrados = atribuirexames.filter((e) =>
     e.colaborador?.toLowerCase()?.includes(busca.toLowerCase())
   );
 

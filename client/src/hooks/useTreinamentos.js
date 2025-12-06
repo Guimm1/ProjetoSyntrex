@@ -10,7 +10,7 @@ export function useListaTreinamentos() {
   useEffect(() => {
     async function fetchTreinamentos() {
       try {
-        const req = await fetch(`${url}/treinamentos`);
+        const req = await fetch(`${url}/atribuicaotreinamentos`);
         const res = await req.json();
         setTreinamentos(res);
       } catch (erro) {
@@ -81,7 +81,7 @@ export function useEditarTreinamentos() {
 export function useExcluirTreinamentos() {
   const ExcluirTreinamento = async (id) => {
     try {
-      const req = await fetch(`${url}/treinamentos/${id}`, {
+      const req = await fetch(`${url}/atribuicaotreinamentos/${id}`, {
         method: "DELETE",
       });
 

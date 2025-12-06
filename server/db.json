@@ -45,7 +45,9 @@
       "colaborador": "a",
       "nomeExame": "a",
       "descricao": "a",
-      "validade": "4"
+      "validade": "4",
+      "funcionarioId": "fbce",
+      "exameId": "2"
     },
     {
       "id": "1978",
@@ -55,10 +57,42 @@
       "validade": "5"
     }
   ],
-  "categorias": [
+  "exames": [
     {
       "id": "1",
-      "nome": "Saúde e Beleza"
+      "nome": "Sangue"
+    },
+    {
+      "id": "2",
+      "nome": "Urina"
+    },
+    {
+      "id": "3",
+      "nome": "Audiometria"
+    },
+    {
+      "id": "4",
+      "nome": "Avaliação Oftalmológica"
+    },
+    {
+      "id": "5",
+      "nome": "Espirometria"
+    },
+    {
+      "id": "6",
+      "nome": "Eletrocardiograma (ECG)"
+    },
+    {
+      "id": "7",
+      "nome": "Eletroencefalograma (EEG)"
+    },
+    {
+      "id": "8",
+      "nome": "Psicológicos"
+    },
+    {
+      "id": "9",
+      "nome": "Testes de Drogas e Álcool"
     }
   ],
   "funcionarios": [
@@ -83,9 +117,6 @@
   ],
   "atribuicaotreinamentos": [
     {
-      "id": "2be6"
-    },
-    {
       "id": "cd91",
       "colaborador": "Gustavo",
       "nomeTreinamento": "treino",
@@ -94,13 +125,6 @@
     },
     {
       "id": "f47a",
-      "colaborador": "aaaaaaaaaaaaaaaaaaaaa",
-      "nomeTreinamento": "bbbbbbbbbbbbb",
-      "descricao": "cccccccccccc",
-      "validade": "1"
-    },
-    {
-      "id": "2426",
       "colaborador": "aaaaaaaaaaaaaaaaaaaaa",
       "nomeTreinamento": "bbbbbbbbbbbbb",
       "descricao": "cccccccccccc",
