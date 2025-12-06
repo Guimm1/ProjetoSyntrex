@@ -1,0 +1,408 @@
+{
+  "usuarios": [
+    {
+      "id": "1",
+      "nome": "Gustavo",
+      "email": "gustavoblazechi@gmail.com",
+      "senha": "37",
+      "tipo": "Administrador",
+      "imagemUrl": "https://img.freepik.com/vetores-premium/icone-de-perfil-de-usuario-em-estilo-plano-ilustracao-em-vetor-avatar-membro-em-fundo-isolado-conceito-de-negocio-de-sinal-de-permissao-humana_157943-15752.jpg?semt=ais_hybrid&w=740&q=80"
+    },
+    {
+      "id": "2",
+      "nome": "Cristiano",
+      "email": "cristiano@gmail.com",
+      "senha": "7",
+      "tipo": "Gerente",
+      "imagemUrl": "https://conteudo.imguol.com.br/c/esporte/d6/2025/04/05/cristiano-ronaldo-durante-jogo-entre-al-hilal-e-al-nassr-no-campeonato-saudita-1743855177331_v2_450x450.jpg"
+    },
+    {
+      "id": "3",
+      "nome": "Goku",
+      "email": "goku@gmail.com",
+      "senha": "3",
+      "tipo": "Funcionário",
+      "imagemUrl": null
+    }
+  ],
+  "exames": [
+    {
+      "id": "8b13",
+      "colaborador": "Guilherme Galvao",
+      "nomeExame": "Anemia",
+      "descricao": "exame",
+      "validade": "1",
+      "funcao": "Operador",
+      "active": false
+    },
+    {
+      "id": "d7bf",
+      "colaborador": "Guilherme Galvao",
+      "nomeExame": "Exame Admissional",
+      "descricao": "Admissao",
+      "validade": "1",
+      "funcao": "Operador",
+      "status": "PRÓX DO VENCIMENTO"
+    },
+    {
+      "id": "c8ab",
+      "colaborador": "Guilherme Galvao",
+      "nomeExame": "Glicemia",
+      "descricao": "dificil",
+      "validade": "0",
+      "funcao": "Operador",
+      "status": "EM ABERTO",
+      "createdAt": "2025-12-06T20:51:19.702Z",
+      "active": true
+    },
+    {
+      "id": "e992",
+      "colaborador": "Guilherme Galvao",
+      "nomeExame": "AST/ALT",
+      "descricao": "dificil",
+      "validade": "1",
+      "funcao": "Operador",
+      "status": "EM ABERTO",
+      "createdAt": "2025-12-06T21:32:18.668Z",
+      "active": true
+    }
+  ],
+  "categoriasExames": [
+    {
+      "id": "1",
+      "nome": "Exame Admissional"
+    },
+    {
+      "id": "2",
+      "nome": "Exame Periódico"
+    },
+    {
+      "id": "3",
+      "nome": "Exame de Retorno"
+    },
+    {
+      "id": "4",
+      "nome": "Exame de Mudança de Função"
+    },
+    {
+      "id": "5",
+      "nome": "Hemograma"
+    },
+    {
+      "id": "6",
+      "nome": "Glicemia"
+    },
+    {
+      "id": "7",
+      "nome": "Colesterol"
+    },
+    {
+      "id": "8",
+      "nome": "Triglicerídeos"
+    },
+    {
+      "id": "9",
+      "nome": "Creatinina"
+    },
+    {
+      "id": "10",
+      "nome": "AST/ALT"
+    },
+    {
+      "id": "11",
+      "nome": "Eletrocardiograma"
+    },
+    {
+      "id": "12",
+      "nome": "Radiografia Torácica"
+    },
+    {
+      "id": "13",
+      "nome": "Teste de Audição"
+    },
+    {
+      "id": "14",
+      "nome": "Teste de Visão"
+    },
+    {
+      "id": "15",
+      "nome": "Espirometria"
+    },
+    {
+      "id": "16",
+      "nome": "Urina"
+    },
+    {
+      "id": "17",
+      "nome": "Pressão Arterial"
+    },
+    {
+      "id": "18",
+      "nome": "IMC"
+    },
+    {
+      "id": "19",
+      "nome": "Sorologias"
+    },
+    {
+      "id": "20",
+      "nome": "Ácido Úrico"
+    },
+    {
+      "id": "21",
+      "nome": "TSH"
+    },
+    {
+      "id": "22",
+      "nome": "Teste Ergométrico"
+    },
+    {
+      "id": "23",
+      "nome": "Ultrassonografia"
+    },
+    {
+      "id": "24",
+      "nome": "Ressonância Magnética"
+    },
+    {
+      "id": "25",
+      "nome": "Tomografia"
+    },
+    {
+      "id": "26",
+      "nome": "Endoscopia"
+    },
+    {
+      "id": "27",
+      "nome": "Colonoscopia"
+    },
+    {
+      "id": "28",
+      "nome": "Teste Neuropsicológico"
+    },
+    {
+      "id": "29",
+      "nome": "Avaliação Postural"
+    },
+    {
+      "id": "30",
+      "nome": "Teste de Força Muscular"
+    }
+  ],
+  "categoriasTrainamentos": [
+    {
+      "id": "1",
+      "nome": "NR01 - Disposições Gerais"
+    },
+    {
+      "id": "2",
+      "nome": "NR04 - Serviços Especializados em Segurança"
+    },
+    {
+      "id": "3",
+      "nome": "NR05 - Comissão Interna de Prevenção de Acidentes"
+    },
+    {
+      "id": "4",
+      "nome": "NR06 - Equipamento de Proteção Individual"
+    },
+    {
+      "id": "5",
+      "nome": "NR10 - Segurança em Instalações e Serviços com Eletricidade"
+    },
+    {
+      "id": "6",
+      "nome": "NR11 - Transporte, Movimentação, Armazenagem e Manipulação de Materiais"
+    },
+    {
+      "id": "7",
+      "nome": "NR12 - Segurança do Trabalho em Máquinas e Equipamentos"
+    },
+    {
+      "id": "8",
+      "nome": "NR13 - Caldeiras, Vasos de Pressão e Tubulações"
+    },
+    {
+      "id": "9",
+      "nome": "NR15 - Atividades e Operações Insalubres"
+    },
+    {
+      "id": "10",
+      "nome": "NR16 - Atividades e Operações Perigosas"
+    },
+    {
+      "id": "11",
+      "nome": "NR17 - Ergonomia"
+    },
+    {
+      "id": "12",
+      "nome": "NR18 - Condições e Meio Ambiente de Trabalho na Construção"
+    },
+    {
+      "id": "13",
+      "nome": "NR20 - Segurança e Saúde no Trabalho com Inflamáveis e Combustíveis"
+    },
+    {
+      "id": "14",
+      "nome": "NR21 - Trabalho a Céu Aberto"
+    },
+    {
+      "id": "15",
+      "nome": "NR23 - Proteção Contra Incêndios"
+    },
+    {
+      "id": "16",
+      "nome": "NR25 - Resíduos Industriais"
+    },
+    {
+      "id": "17",
+      "nome": "NR26 - Sinalização de Segurança"
+    },
+    {
+      "id": "18",
+      "nome": "NR28 - Fiscalização e Penalidades"
+    },
+    {
+      "id": "19",
+      "nome": "NR30 - Segurança e Saúde no Trabalho Portuário"
+    },
+    {
+      "id": "20",
+      "nome": "NR32 - Segurança e Saúde no Trabalho em Serviços de Saúde"
+    },
+    {
+      "id": "21",
+      "nome": "NR33 - Segurança e Saúde nos Trabalhos em Espaços Confinados"
+    },
+    {
+      "id": "22",
+      "nome": "NR34 - Condições e Meio Ambiente de Trabalho na Indústria da Construção"
+    },
+    {
+      "id": "23",
+      "nome": "NR35 - Trabalho em Altura"
+    },
+    {
+      "id": "24",
+      "nome": "Primeiros Socorros"
+    },
+    {
+      "id": "25",
+      "nome": "Combate a Incêndio"
+    },
+    {
+      "id": "26",
+      "nome": "Gestão de Segurança"
+    },
+    {
+      "id": "27",
+      "nome": "Comunicação e Liderança"
+    },
+    {
+      "id": "28",
+      "nome": "Sistema de Gestão Ambiental"
+    },
+    {
+      "id": "29",
+      "nome": "Treinamento de Integração"
+    },
+    {
+      "id": "30",
+      "nome": "Treinamento de Reciclagem"
+    }
+  ],
+  "categorias": [
+    {
+      "id": "1",
+      "nome": "Saúde e Beleza"
+    }
+  ],
+  "funcionarios": [
+    {
+      "id": "3ceb",
+      "nome": "Guilherme Galvao",
+      "matricula": "1234",
+      "funcao": "Operador"
+    },
+    {
+      "id": "0a0c",
+      "nome": "Guilherme Magri",
+      "matricula": "37445",
+      "funcao": "pedreiro"
+    },
+    {
+      "id": "a71c",
+      "nome": "Gustavo ",
+      "matricula": "37444",
+      "funcao": "Dono"
+    }
+  ],
+  "treinamentos": [
+    {
+      "id": "2be6"
+    },
+    {
+      "id": "2d67",
+      "colaborador": "Guilherme Galvao",
+      "nomeTreinamento": "NR13 - Caldeiras, Vasos de Pressão e Tubulações",
+      "descricao": "NR",
+      "validade": "1",
+      "funcao": "Operador",
+      "status": "CONCLUIDO",
+      "active": false
+    },
+    {
+      "id": "1071",
+      "colaborador": "Guilherme Galvao",
+      "nomeTreinamento": "NR10 - Segurança em Instalações e Serviços com Eletricidade",
+      "descricao": "nr10",
+      "validade": "-11",
+      "funcao": "Operador",
+      "status": "PENDENTE"
+    },
+    {
+      "id": "e175",
+      "colaborador": "Gustavo ",
+      "nomeTreinamento": "Primeiros Socorros",
+      "descricao": "dificil",
+      "validade": "4",
+      "funcao": "Dono",
+      "status": "CONCLUIDO",
+      "createdAt": "2024-12-06T20:34:14.288Z",
+      "active": true
+    },
+    {
+      "id": "0dae",
+      "colaborador": "Guilherme Magri",
+      "nomeTreinamento": "NR11 - Transporte, Movimentação, Armazenagem e Manipulação de Materiais",
+      "descricao": "dificil",
+      "validade": "1",
+      "funcao": "pedreiro",
+      "status": "VENCIDO",
+      "createdAt": "2024-12-06T20:48:40.840Z",
+      "active": true
+    },
+    {
+      "id": "3c86",
+      "colaborador": "Guilherme Magri",
+      "nomeTreinamento": "NR13 - Caldeiras, Vasos de Pressão e Tubulações",
+      "descricao": "branco",
+      "validade": "1",
+      "funcao": "pedreiro",
+      "status": "EM ABERTO",
+      "createdAt": "2025-12-06T20:48:53.058Z",
+      "active": true
+    },
+    {
+      "id": "cfa5",
+      "colaborador": "Guilherme Galvao",
+      "nomeTreinamento": "NR11 - Transporte, Movimentação, Armazenagem e Manipulação de Materiais",
+      "descricao": "cccccccccccc",
+      "validade": "0",
+      "funcao": "Operador",
+      "status": "EM ABERTO",
+      "createdAt": "2025-12-06T20:49:04.026Z",
+      "active": true
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+/* === PÁGINA === */
+.page {
+  background: #223773;
+  width: 100%;
+  min-height: 100vh;
+  padding: 40px;
+  box-sizing: border-box;
+  font-family: Inter, Arial, sans-serif;
+  color: white;
+}
+
+/* === CONTAINER CENTRAL === */
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* === TÍTULO === */
+.title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: white;
+}
+
+/* === CAMPO DE BUSCA === */
+.topRow {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 25px;
+}
+
+.search {
+  width: 60%;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  background: white;
+  color: #000;
+}
+
+/* === CARD DA TABELA === */
+.tableCard {
+  width: 100%;
+  background: white;
+  border-radius: 6px;
+  overflow: hidden;
+  border-collapse: collapse;
+}
+
+/* === TABELA === */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+/* === CABEÇALHO === */
+.table thead {
+  background: #d9d9d9;
+  color: #000;
+}
+
+.table th {
+  padding: 12px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: left;
+  color: #000;
+}
+
+/* === LINHAS === */
+.table td {
+  padding: 12px;
+  font-size: 14px;
+  color: #000;
+  border-bottom: 1px solid #eee;
+}
+
+.table tbody tr:nth-child(even) {
+  background: #f9fafc;
+}
+
+/* === RODAPÉ === */
+.bottomRow {
+  margin-top: 25px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* === BOTÃO EXPORTAR === */
+.exportBtn {
+  padding: 12px 20px;
+  background: #15966B;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.exportBtn:hover {
+  background: #0d7a57;
+}

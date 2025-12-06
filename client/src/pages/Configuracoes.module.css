@@ -1,0 +1,167 @@
+.container {
+  background: #223773;
+  width: 100%;
+  min-height: 100vh;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.titulo {
+  color: white;
+  font-size: 32px;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+.conteudo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.subtitulo {
+  color: #223773;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 20px 0;
+  border-bottom: 2px solid #d4bf2a;
+  padding-bottom: 12px;
+}
+
+.secao {
+  margin-bottom: 20px;
+}
+
+.label {
+  display: block;
+  color: #223773;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.select,
+.input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.select:focus,
+.input:focus {
+  outline: none;
+  border-color: #223773;
+  box-shadow: 0 0 5px rgba(34, 55, 115, 0.3);
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.checkbox input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+  cursor: pointer;
+  accent-color: #223773;
+}
+
+.checkbox label {
+  color: #555;
+  font-size: 14px;
+  cursor: pointer;
+  margin: 0;
+}
+
+.divisor {
+  height: 1px;
+  background: #eee;
+  margin: 20px 0;
+}
+
+.botaoSalvar {
+  width: 100%;
+  background: #223773;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.botaoSalvar:hover {
+  background: #1a2a57;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(34, 55, 115, 0.4);
+}
+
+.botaoSalvar:active {
+  transform: translateY(0);
+}
+
+.mensagem {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 16px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.3s ease;
+  z-index: 1000;
+}
+
+.mensagem.sucesso {
+  background: #8fe39e;
+  color: #0d5e2e;
+  border-left: 4px solid #0d5e2e;
+}
+
+.mensagem.erro {
+  background: #ff6b6b;
+  color: white;
+  border-left: 4px solid #d63632;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .conteudo {
+    grid-template-columns: 1fr;
+  }
+
+  .container {
+    padding: 20px;
+  }
+
+  .titulo {
+    font-size: 24px;
+  }
+}

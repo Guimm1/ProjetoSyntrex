@@ -1,0 +1,26 @@
+.badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  text-align: center;
+  color: #000;
+}
+
+.concluido {
+  background: #8fe39e;
+}
+
+.vencimento {
+  background: #f7e86b;
+}
+
+.pendente {
+  background: #ff6b6b;
+}
+
+.emAberto {
+  background: #c1bfb5;
+}
