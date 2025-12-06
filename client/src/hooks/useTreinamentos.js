@@ -3,7 +3,7 @@ const url = "http://localhost:5000";
 
 import { useState, useEffect } from "react";
 
-// LISTAR TREINAMENTOS
+// LISTAR TREINAMENTOS CADASTRADOS
 export function useListaTreinamentos() {
   const [treinamentos, setTreinamentos] = useState([]);
 
@@ -22,6 +22,27 @@ export function useListaTreinamentos() {
   }, []);
 
   return treinamentos;
+}
+
+// LISTAR CATEGORIAS DE TREINAMENTOS
+export function useListaCategoriaTrainamentos() {
+  const [categorias, setCategorias] = useState([]);
+
+  useEffect(() => {
+    async function fetchCategorias() {
+      try {
+        const req = await fetch(`${url}/categoriasTrainamentos`);
+        const res = await req.json();
+        setCategorias(res);
+      } catch (erro) {
+        console.log("Erro ao carregar categorias de treinamentos:", erro.message);
+      }
+    }
+
+    fetchCategorias();
+  }, []);
+
+  return categorias;
 }
 
 // CADASTRAR TREINAMENTO

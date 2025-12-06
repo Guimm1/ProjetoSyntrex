@@ -3,7 +3,7 @@ const url = "http://localhost:5000"; // mantenha a porta que seu json-server usa
 
 import { useState, useEffect } from "react";
 
-// LISTAR CATEGORIAS
+// LISTAR EXAMES CADASTRADOS
 export function useListaExames() {
   const [exames, setExames] = useState([]);
 
@@ -21,6 +21,26 @@ export function useListaExames() {
   }, []);
 
   return exames;
+}
+
+// LISTAR CATEGORIAS DE EXAMES
+export function useListaCategoriaExames() {
+  const [categorias, setCategorias] = useState([]);
+
+  useEffect(() => {
+    async function fetchCategorias() {
+      try {
+        const req = await fetch(`${url}/categoriasExames`);
+        const res = await req.json();
+        setCategorias(res);
+      } catch (erro) {
+        console.log("Erro ao carregar categorias de exames:", erro.message);
+      }
+    }
+    fetchCategorias();
+  }, []);
+
+  return categorias;
 }
 
 

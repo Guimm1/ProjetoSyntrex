@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { useCadastrarTreinamentos, useEditarTreinamentos } from "../../hooks/useTreinamentos";
+import { useCadastrarTreinamentos, useEditarTreinamentos, useListaCategoriaTrainamentos } from "../../hooks/useTreinamentos";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useListaFuncionarios } from "../../hooks/useFuncionarios";
 
 const CadastroTreinamento = () => {
   const { id } = useParams();
@@ -13,14 +14,21 @@ const CadastroTreinamento = () => {
   const { EditarTreinamento } = useEditarTreinamentos();
 
   const [carregando, setCarregando] = useState(false);
-  const [treinamento, setTreinamento] = useState(null);  // <<< ADICIONADO
+  const [treinamento, setTreinamento] = useState(null);
+  const funcionarios = useListaFuncionarios();
+  const categoriasTrainamentos = useListaCategoriaTrainamentos();
+  const [funcaoSelecionada, setFuncaoSelecionada] = useState("");
+  const [erroValidacao, setErroValidacao] = useState("");
 
   const {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm();
+
+  const colaboradorSelecionado = watch("colaborador");
 
   // Buscar dados do treinamento ANTES de montar o form
   async function buscarTreinamentoPorId(id) {
@@ -48,11 +56,45 @@ const CadastroTreinamento = () => {
   useEffect(() => {
     if (treinamento) {
       reset(treinamento);
+      setFuncaoSelecionada(treinamento.funcao || "");
     }
   }, [treinamento, reset]);
 
+  // Quando o colaborador mudar, atualizar a função
+  useEffect(() => {
+    if (colaboradorSelecionado) {
+      const funcSelecionada = funcionarios.find(
+        (f) => f.nome === colaboradorSelecionado
+      );
+      if (funcSelecionada) {
+        setFuncaoSelecionada(funcSelecionada.funcao);
+      }
+    }
+  }, [colaboradorSelecionado, funcionarios]);
+
   // Ao salvar
   const onSubmit = async (data) => {
+    // Converter ID para nome do treinamento
+    const treinamentoSelecionado = categoriasTrainamentos.find(t => t.id === parseInt(data.nomeTreinamento));
+    
+    // Validar duplicidade: mesmo funcionário não pode ter o mesmo treinamento
+    if (!id && data.colaborador && treinamentoSelecionado) {
+      const existe = treinamento?.some(
+        t => t.colaborador === data.colaborador && t.nomeTreinamento === treinamentoSelecionado.nome
+      );
+      
+      if (existe) {
+        alert("Este colaborador já possui este treinamento cadastrado!");
+        return;
+      }
+    }
+
+    // Substituir ID pelo nome do treinamento
+    data.nomeTreinamento = treinamentoSelecionado?.nome || data.nomeTreinamento;
+
+    // Adicionar a função ao objeto de dados
+    data.funcao = funcaoSelecionada;
+    
     if (id) {
       const res = await EditarTreinamento(id, data);
       if (res) {
@@ -136,8 +178,8 @@ const CadastroTreinamento = () => {
             style={{
               display: "flex",
               alignItems: "center",
-              width: "130%",
-              maxWidth: "900px",
+              width: "100%",
+              maxWidth: "600px",
               gap: "20px",
             }}
           >
@@ -152,13 +194,12 @@ const CadastroTreinamento = () => {
             >
               Nome do colaborador
             </Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Buscar colaborador ou Matrícula"
+            <Form.Select
               {...register("colaborador", { required: true })}
               style={{
                 flex: "1",
                 height: "50px",
+                minWidth: "350px",
                 fontSize: "16px",
                 borderRadius: "8px",
                 border: "1px solid #fff",
@@ -167,7 +208,14 @@ const CadastroTreinamento = () => {
                 color: "#000",
                 width: "100%",
               }}
-            />
+            >
+              <option value="">Selecionar colaborador</option>
+              {funcionarios.map((func) => (
+                <option key={func.id} value={func.nome}>
+                  {func.nome}
+                </option>
+              ))}
+            </Form.Select>
           </div>
 
           {/* Campo: Nome do Treinamento */}
@@ -175,8 +223,8 @@ const CadastroTreinamento = () => {
             style={{
               display: "flex",
               alignItems: "center",
-              width: "130%",
-              maxWidth: "900px",
+              width: "100%",
+              maxWidth: "600px",
               gap: "20px",
             }}
           >
@@ -191,12 +239,12 @@ const CadastroTreinamento = () => {
             >
               Nome do Treinamento
             </Form.Label>
-            <Form.Control
-              type="text"
+            <Form.Select
               {...register("nomeTreinamento", { required: true })}
               style={{
                 flex: "1",
                 height: "50px",
+                minWidth: "350px",
                 fontSize: "16px",
                 borderRadius: "8px",
                 border: "1px solid #fff",
@@ -205,7 +253,14 @@ const CadastroTreinamento = () => {
                 color: "#000",
                 width: "100%",
               }}
-            />
+            >
+              <option value="">Selecionar treinamento</option>
+              {categoriasTrainamentos.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.nome}
+                </option>
+              ))}
+            </Form.Select>
           </div>
 
           {/* Campo: Descrição */}
@@ -213,8 +268,8 @@ const CadastroTreinamento = () => {
             style={{
               display: "flex",
               alignItems: "center",
-              width: "130%",
-              maxWidth: "900px",
+              width: "100%",
+              maxWidth: "600px",
               gap: "20px",
             }}
           >
@@ -235,6 +290,7 @@ const CadastroTreinamento = () => {
               style={{
                 flex: "1",
                 height: "50px",
+                minWidth: "350px",
                 fontSize: "16px",
                 borderRadius: "8px",
                 border: "1px solid #fff",
@@ -251,8 +307,8 @@ const CadastroTreinamento = () => {
             style={{
               display: "flex",
               alignItems: "center",
-              width: "130%",
-              maxWidth: "900px",
+              width: "100%",
+              maxWidth: "600px",
               gap: "20px",
             }}
           >
@@ -269,17 +325,18 @@ const CadastroTreinamento = () => {
             </Form.Label>
             <Form.Control
               type="number"
-              {...register("validade", { required: true, min: 1 })}
+              {...register("validade", { required: true })}
               style={{
                 flex: "1",
                 height: "50px",
+                minWidth: "350px",
                 fontSize: "16px",
                 borderRadius: "8px",
                 border: "1px solid #fff",
                 padding: "10px 14px",
                 backgroundColor: "white",
                 color: "#000",
-                width: "130%",
+                width: "100%",
               }}
             />
           </div>

@@ -27,6 +27,7 @@ const Relatorios = () => {
 
     // --- Exames ---
     exames.forEach(exame => {
+      if (!exame.colaborador) return; // Pular exames sem colaborador
       const funcionario = funcionarios.find(
         f => f.nome?.toLowerCase() === exame.colaborador?.toLowerCase()
       );
@@ -42,6 +43,7 @@ const Relatorios = () => {
 
     // --- Treinamentos ---
     treinamentos.forEach(trein => {
+      if (!trein.colaborador) return; // Pular treinamentos sem colaborador
       const funcionario = funcionarios.find(
         f => f.nome?.toLowerCase() === trein.colaborador?.toLowerCase()
       );
@@ -125,7 +127,7 @@ const Relatorios = () => {
 
         <div className={styles.bottomRow}>
           <button className={styles.exportBtn} onClick={exportarExcel}>
-            📥 Exportar para Excel
+             Exportar para Excel
           </button>
         </div>
 

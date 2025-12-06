@@ -90,7 +90,7 @@ export default function GerenciarTreinamentos() {
                 />
               </td>
               <td>{t.colaborador || "—"}</td>
-              <td>{t.descricao || "—"}</td>
+              <td>{t.funcao || "—"}</td>
               <td>{t.nomeTreinamento || "—"}</td>
               <td>
                 <span className={`${styles.status} ${getStatusColor(t.status)}`}>

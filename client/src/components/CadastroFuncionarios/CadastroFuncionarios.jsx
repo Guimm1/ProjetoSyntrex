@@ -7,6 +7,7 @@ import {
 import { useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { useListaFuncionarios } from "../../hooks/useFuncionarios";
 
 const CadastroFuncionarios = () => {
   const { id } = useParams();
@@ -14,6 +15,8 @@ const CadastroFuncionarios = () => {
 
   const { CadastrarFuncionario } = useCadastrarFuncionario();
   const { EditarFuncionario } = useEditarFuncionario();
+
+  const funcionarios = useListaFuncionarios();
 
   const { register, handleSubmit, setValue } = useForm();
 
@@ -30,6 +33,15 @@ const CadastroFuncionarios = () => {
   }, [id]);
 
   const onSubmit = async (data) => {
+    // Verificar duplicidade de matrícula
+    const matriculaTrim = (data.matricula || "").toString().trim();
+    const existente = funcionarios.find((f) => f.matricula === matriculaTrim);
+
+    if (existente && (!id || existente.id !== id)) {
+      alert("Matrícula já existe. Escolha outra matrícula ou edite o funcionário existente.");
+      return;
+    }
+
     if (id) await EditarFuncionario(id, data);
     else await CadastrarFuncionario(data);
 
@@ -52,8 +64,9 @@ const CadastroFuncionarios = () => {
       <div
         style={{
           width: "100%",
-          maxWidth: "900px",
+          maxWidth: "1000px",
           textAlign: "left",
+          backgroundColor: "#223773",
           padding: "40px 50px",
         }}
       >
@@ -62,7 +75,7 @@ const CadastroFuncionarios = () => {
             fontWeight: "bold",
             fontSize: "36px",
             marginBottom: "50px",
-            textAlign: "center",
+            marginLeft: "90px",
           }}
         >
           {id ? "Editar Funcionário" : "Cadastrar Funcionário"}
@@ -73,90 +86,138 @@ const CadastroFuncionarios = () => {
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "30px",
+            gap: "25px",
             alignItems: "center",
           }}
         >
-          <div style={{
+          {/* Campo: Nome do funcionário */}
+          <div
+            style={{
               display: "flex",
               alignItems: "center",
-              width: "130%",
-              maxWidth: "900px",
+              width: "100%",
+              maxWidth: "600px",
               gap: "20px",
-            }}>
-
-           <Form.Label style={{
+            }}
+          >
+            <Form.Label
+              style={{
                 flex: "0 0 230px",
                 textAlign: "right",
                 fontWeight: "500",
                 fontSize: "18px",
-                whiteSpace: "nowrap",}}>
-                Nome do funcionário
-                </Form.Label>    
-
-
-          <Form.Control
-            type="text"
-            {...register("nome")}
-            style={{ width: "130%", height: "50px" }}
-          />
+                whiteSpace: "nowrap",
+              }}
+            >
+              Nome do funcionário
+            </Form.Label>
+            <Form.Control
+              type="text"
+              {...register("nome")}
+              style={{
+                flex: "1",
+                height: "50px",
+                minWidth: "350px",
+                fontSize: "16px",
+                borderRadius: "8px",
+                border: "1px solid #fff",
+                padding: "10px 14px",
+                backgroundColor: "white",
+                color: "#000",
+                width: "100%",
+              }}
+            />
           </div>
 
-          
-          <div style={{
+          {/* Campo: Matrícula */}
+          <div
+            style={{
               display: "flex",
               alignItems: "center",
-              width: "130%",
-              maxWidth: "900px",
+              width: "100%",
+              maxWidth: "600px",
               gap: "20px",
-            }}>
-          <Form.Label style={{
+            }}
+          >
+            <Form.Label
+              style={{
                 flex: "0 0 230px",
                 textAlign: "right",
                 fontWeight: "500",
                 fontSize: "18px",
-                whiteSpace: "nowrap",}}>
-                Matrícula
-                </Form.Label>    
-
-
-          <Form.Control
-            type="text"
-            {...register("matricula")}
-            style={{ width: "130%", height: "50px" }}
-          />
+                whiteSpace: "nowrap",
+              }}
+            >
+              Matrícula
+            </Form.Label>
+            <Form.Control
+              type="text"
+              {...register("matricula")}
+              style={{
+                flex: "1",
+                height: "50px",
+                minWidth: "350px",
+                fontSize: "16px",
+                borderRadius: "8px",
+                border: "1px solid #fff",
+                padding: "10px 14px",
+                backgroundColor: "white",
+                color: "#000",
+                width: "100%",
+              }}
+            />
           </div>
-          <div style={{
+
+          {/* Campo: Função */}
+          <div
+            style={{
               display: "flex",
               alignItems: "center",
-              width: "130%",
-              maxWidth: "900px",
+              width: "100%",
+              maxWidth: "600px",
               gap: "20px",
-            }}>
-          <Form.Label style={{
+            }}
+          >
+            <Form.Label
+              style={{
                 flex: "0 0 230px",
                 textAlign: "right",
                 fontWeight: "500",
                 fontSize: "18px",
-                whiteSpace: "nowrap",}}>
-                Função
-                </Form.Label>    
+                whiteSpace: "nowrap",
+              }}
+            >
+              Função
+            </Form.Label>
+            <Form.Control
+              type="text"
+              {...register("funcao")}
+              style={{
+                flex: "1",
+                height: "50px",
+                minWidth: "350px",
+                fontSize: "16px",
+                borderRadius: "8px",
+                border: "1px solid #fff",
+                padding: "10px 14px",
+                backgroundColor: "white",
+                color: "#000",
+                width: "100%",
+              }}
+            />
+          </div>
 
-
-          <Form.Control
-            type="text"
-            {...register("funcao")}
-            style={{ width: "130%", height: "50px" }}
-          />
-         </div>
-         
           <Button
             type="submit"
             style={{
               backgroundColor: "#15966B",
               border: "none",
-              width: "180px",
-              height: "48px",
+              width: "220px",
+              height: "50px",
+              fontSize: "18px",
+              fontWeight: "600",
+              marginTop: "40px",
+              boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
             }}
           >
             SALVAR

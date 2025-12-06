@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { useCadastrarExame, useEditarExames} from "../../hooks/useExames";
+import { useCadastrarExame, useEditarExames, useListaCategoriaExames, useListaExames } from "../../hooks/useExames";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useListaFuncionarios } from "../../hooks/useFuncionarios";
 
 const CadastroExames = () => {
   const { id } = useParams();
@@ -13,15 +14,22 @@ const CadastroExames = () => {
   const { EditarExame } = useEditarExames();
 
   const [carregando, setCarregando] = useState(false);
-  const [exame, setExame] = useState(null);  // <<< ADICIONADO
+  const [exame, setExame] = useState(null);
+  const funcionarios = useListaFuncionarios();
+  const categoriasExames = useListaCategoriaExames();
+  const examesListados = useListaExames();
+  const [funcaoSelecionada, setFuncaoSelecionada] = useState("");
 
 
   const {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm();
+
+  const colaboradorSelecionado = watch("colaborador");
 
    // Buscar dados do treinamento ANTES de montar o form
    async function buscarExamePorId(id) {
@@ -37,8 +45,6 @@ const CadastroExames = () => {
       setCarregando(false);
     }
   }
-
-  // Se existir ID → buscar dados para edição
   useEffect(() => {
     if (id) {
       buscarExamePorId(id);
@@ -49,11 +55,45 @@ const CadastroExames = () => {
   useEffect(() => {
     if (exame) {
       reset(exame);
+      setFuncaoSelecionada(exame.funcao || "");
     }
   }, [exame, reset]);
 
+  // Quando o colaborador mudar, atualizar a função
+  useEffect(() => {
+    if (colaboradorSelecionado) {
+      const funcSelecionada = funcionarios.find(
+        (f) => f.nome === colaboradorSelecionado
+      );
+      if (funcSelecionada) {
+        setFuncaoSelecionada(funcSelecionada.funcao);
+      }
+    }
+  }, [colaboradorSelecionado, funcionarios]);
+
   // Ao salvar
   const onSubmit = async (data) => {
+    // Converter ID para nome do exame
+    const exameSelecionado = categoriasExames.find(e => e.id === parseInt(data.nomeExame));
+    
+    // Validar duplicidade: mesmo funcionário não pode ter o mesmo exame
+    if (!id && data.colaborador && exameSelecionado) {
+      const existe = examesListados.some(
+        ex => ex.colaborador === data.colaborador && ex.nomeExame === exameSelecionado.nome
+      );
+      
+      if (existe) {
+        alert("Este colaborador já possui este exame cadastrado!");
+        return;
+      }
+    }
+
+    // Substituir ID pelo nome do exame
+    data.nomeExame = exameSelecionado?.nome || data.nomeExame;
+
+    // Adicionar a função ao objeto de dados
+    data.funcao = funcaoSelecionada;
+    
     if (id) {
       const res = await EditarExame(id, data);
       if (res) {
@@ -110,19 +150,17 @@ const CadastroExames = () => {
           textAlign: "left",
           backgroundColor: "#223773",
           padding: "40px 50px",
-          
         }}
       >
         <h2
           style={{
             fontWeight: "bold",
             fontSize: "36px",
-            marginLeft:"100px",
-            marginBottom:"50px"
-           
+            marginBottom: "50px",
+            marginLeft: "90px",
           }}
         >
-          Cadastrar Exame
+          {id ? "Editar Exame" : "Cadastrar Exame"}
         </h2>
 
         <Form
@@ -139,8 +177,8 @@ const CadastroExames = () => {
             style={{
               display: "flex",
               alignItems: "center",
-              width: "130%",
-              maxWidth: "900px",
+              width: "100%",
+              maxWidth: "600px",
               gap: "20px",
             }}
           >
@@ -155,13 +193,12 @@ const CadastroExames = () => {
             >
               Nome do colaborador
             </Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Buscar colaborador ou Matrícula"
+            <Form.Select
               {...register("colaborador", { required: true })}
               style={{
                 flex: "1",
                 height: "50px",
+                minWidth: "350px",
                 fontSize: "16px",
                 borderRadius: "8px",
                 border: "1px solid #fff",
@@ -170,7 +207,14 @@ const CadastroExames = () => {
                 color: "#000",
                 width: "100%",
               }}
-            />
+            >
+              <option value="">Selecionar colaborador</option>
+              {funcionarios.map((func) => (
+                <option key={func.id} value={func.nome}>
+                  {func.nome}
+                </option>
+              ))}
+            </Form.Select>
           </div>
 
           {/* Campo: Nome do Exame */}
@@ -178,8 +222,8 @@ const CadastroExames = () => {
             style={{
               display: "flex",
               alignItems: "center",
-              width: "130%",
-              maxWidth: "900px",
+              width: "100%",
+              maxWidth: "600px",
               gap: "20px",
             }}
           >
@@ -194,12 +238,12 @@ const CadastroExames = () => {
             >
               Nome do Exame
             </Form.Label>
-            <Form.Control
-              type="text"
+            <Form.Select
               {...register("nomeExame", { required: true })}
               style={{
                 flex: "1",
                 height: "50px",
+                minWidth: "350px",
                 fontSize: "16px",
                 borderRadius: "8px",
                 border: "1px solid #fff",
@@ -208,7 +252,14 @@ const CadastroExames = () => {
                 color: "#000",
                 width: "100%",
               }}
-            />
+            >
+              <option value="">Selecionar exame</option>
+              {categoriasExames.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.nome}
+                </option>
+              ))}
+            </Form.Select>
           </div>
 
           {/* Campo: Descrição */}
@@ -216,8 +267,8 @@ const CadastroExames = () => {
             style={{
               display: "flex",
               alignItems: "center",
-              width: "130%",
-              maxWidth: "900px",
+              width: "100%",
+              maxWidth: "600px",
               gap: "20px",
             }}
           >
@@ -238,6 +289,7 @@ const CadastroExames = () => {
               style={{
                 flex: "1",
                 height: "50px",
+                minWidth: "350px",
                 fontSize: "16px",
                 borderRadius: "8px",
                 border: "1px solid #fff",
@@ -254,8 +306,8 @@ const CadastroExames = () => {
             style={{
               display: "flex",
               alignItems: "center",
-              width: "130%",
-              maxWidth: "900px",
+              width: "100%",
+              maxWidth: "600px",
               gap: "20px",
             }}
           >
@@ -272,17 +324,18 @@ const CadastroExames = () => {
             </Form.Label>
             <Form.Control
               type="number"
-              {...register("validade", { required: true, min: 1 })}
+              {...register("validade", { required: true })}
               style={{
                 flex: "1",
                 height: "50px",
+                minWidth: "350px",
                 fontSize: "16px",
                 borderRadius: "8px",
                 border: "1px solid #fff",
                 padding: "10px 14px",
                 backgroundColor: "white",
                 color: "#000",
-                width: "130%",
+                width: "100%",
               }}
             />
           </div>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useListaExames, useExcluirExames } from "../../hooks/useExames";
+import { useListaFuncionarios } from "../../hooks/useFuncionarios";
 import { useNavigate } from "react-router-dom";
 import styles from "./GerenciarExames.module.css";
 
@@ -7,6 +8,7 @@ export default function GerenciarExames() {
   const navigate = useNavigate();
 
   const listaExames = useListaExames();
+  const funcionarios = useListaFuncionarios();
   const { ExcluirExame } = useExcluirExames();
 
   const [exames, setExames] = useState([]);
@@ -56,6 +58,16 @@ export default function GerenciarExames() {
     }
   };
 
+  // Função para obter a função do colaborador
+  const obterFuncao = (colaborador, funcaoExame) => {
+    // Se já tem função no exame, usar
+    if (funcaoExame) return funcaoExame;
+    
+    // Caso contrário, buscar do funcionário
+    const func = funcionarios.find((f) => f.nome === colaborador);
+    return func?.funcao || "—";
+  };
+
   return (
     <div className={styles.container}>
       <h1 className={styles.titulo}>Gerenciar exames</h1>
@@ -90,8 +102,8 @@ export default function GerenciarExames() {
                 />
               </td>
               <td>{e.colaborador || "—"}</td>
-              <td>{e.descricao || "—"}</td>
-              <td>{e.nomeTreinamento || "—"}</td>
+              <td>{obterFuncao(e.colaborador, e.funcao)}</td>
+              <td>{e.nomeExame || "—"}</td>
               <td>
                 <span className={`${styles.status} ${getStatusColor(e.status)}`}>
                   {e.status || "EM ABERTO"}
