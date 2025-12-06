@@ -7,7 +7,9 @@ import RotasProtegidas from "./pages/RotasProtegidas.jsx";
 import Home from "./pages/Home.jsx";
 
 import CadastrarExames from "./pages/Exames/CadastrarExames.jsx";
+import GerenciarExames from "./pages/Exames/GerenciarExames.jsx";
 import CadastrarFuncionarios from "./pages/Funcionarios/CadastrarFuncionarios.jsx";
+import GerenciarTreinamentos from "./pages/Treinamentos/GerenciarTreinamentos.jsx";
 import CadastrarTreinamentos from "./pages/Treinamentos/CadastrarTreinamentos.jsx";
 import GerenciarFuncionarios from "./pages/Funcionarios/GerenciarFuncionarios.jsx";
 import Relatorios from "./components/Relatorios/Relatorios.jsx";
@@ -34,9 +36,14 @@ const router = createBrowserRouter([
 
       // EXAMES
       { path: "exames/cadastrar", element: <CadastrarExames /> },
+      { path: "exames/gerenciar", element: <GerenciarExames /> },
+      { path: "exames/editar/:id", element: <CadastrarExames /> },
 
       // TREINAMENTOS
       { path: "treinamentos/cadastrar", element: <CadastrarTreinamentos /> },
+      { path: "treinamentos/gerenciar", element: <GerenciarTreinamentos /> },
+      { path: "treinamentos/editar/:id", element: <CadastrarTreinamentos /> },
+
 
       // FUNCIONÁRIOS
       { path: "funcionarios/cadastrar", element: <CadastrarFuncionarios /> },

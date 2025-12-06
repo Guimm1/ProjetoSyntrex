@@ -1,9 +1,9 @@
 import React from 'react'
-import syntrex2 from '../assets/syntrex2.png'
+import Syntrex from '../assets/Syntrex.png'
 const Home = () => {
   return (
     <div>
-      <img src={syntrex2} alt="Syntrex Logo" style={{ width: '100%', height: '100vh', objectFit: 'cover'}} />
+      <img src={Syntrex} alt="Syntrex Logo" style={{ width: '100%', height: '100vh', objectFit: 'cover'}} />
     </div>
   )
 }

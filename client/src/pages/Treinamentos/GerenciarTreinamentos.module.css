@@ -41,6 +41,26 @@
   border-bottom: 1px solid #eee;
 }
 
+.status {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #000;
+}
+
+.statusVencido {
+  background: #ff6b6b;
+}
+
+.statusProximo {
+  background: #f7e86b;
+}
+
+.statusAberto {
+  background: #c1bfb5;
+}
+
 .botoes {
   display: flex;
   justify-content: center;

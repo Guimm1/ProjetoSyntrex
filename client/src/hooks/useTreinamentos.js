@@ -1,42 +1,33 @@
-// url da API
-const url = "http://localhost:5000"; // mantenha a porta que seu json-server usa
+// URL da API
+const url = "http://localhost:5000";
 
 import { useState, useEffect } from "react";
 
-// LISTAR CATEGORIAS
-export function useListaCategorias() {
-  const [categorias, setCategorias] = useState([]);
+// LISTAR TREINAMENTOS
+export function useListaTreinamentos() {
+  const [treinamentos, setTreinamentos] = useState([]);
 
   useEffect(() => {
-    async function fetchCategorias() {
+    async function fetchTreinamentos() {
       try {
-        const req = await fetch(`${url}/categorias`);
+        const req = await fetch(`${url}/treinamentos`);
         const res = await req.json();
-        setCategorias(res);
+        setTreinamentos(res);
       } catch (erro) {
-        console.log("Erro ao carregar categorias:", erro.message);
+        console.log("Erro ao carregar treinamentos:", erro.message);
       }
     }
-    fetchCategorias();
+
+    fetchTreinamentos();
   }, []);
 
-  return categorias;
+  return treinamentos;
 }
 
-// LISTA DE MEDIDAS
-export function useListaMedidas() {
-  const [medidas] = useState([
-    { id: 1, nome: "mL" },
-    { id: 2, nome: "L" },
-  ]);
-  return medidas;
-}
-
-// ✅ CADASTRAR EXAME (corrigido)
+// CADASTRAR TREINAMENTO
 export function useCadastrarTreinamentos() {
   const CadastrarTreinamento = async (data) => {
     try {
-    
       const req = await fetch(`${url}/treinamentos`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -49,14 +40,61 @@ export function useCadastrarTreinamentos() {
       }
 
       const res = await req.json();
-      console.log(" Treinamento cadastrado com sucesso:", res);
+      console.log("Treinamento cadastrado com sucesso:", res);
 
       return res;
     } catch (erro) {
-      console.error(" Erro na requisição:", erro.message);
+      console.error("Erro na requisição:", erro.message);
     }
   };
 
-
   return { CadastrarTreinamento };
+}
+
+// EDITAR TREINAMENTO
+export function useEditarTreinamentos() {
+  const EditarTreinamento = async (id, data) => {
+    try {
+      const req = await fetch(`${url}/treinamentos/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!req.ok) {
+        console.error("Erro ao editar treinamento:", req.status);
+        return;
+      }
+
+      const res = await req.json();
+      console.log("Treinamento editado com sucesso:", res);
+      return res;
+    } catch (erro) {
+      console.error("Erro na requisição:", erro.message);
+    }
+  };
+
+  return { EditarTreinamento };
+}
+
+// EXCLUIR UM TREINAMENTO
+export function useExcluirTreinamentos() {
+  const ExcluirTreinamento = async (id) => {
+    try {
+      const req = await fetch(`${url}/treinamentos/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!req.ok) {
+        console.error("Erro ao excluir treinamento:", req.status);
+        return;
+      }
+
+      console.log(`Treinamento ${id} excluído com sucesso`);
+    } catch (erro) {
+      console.error("Erro ao excluir:", erro.message);
+    }
+  };
+
+  return { ExcluirTreinamento };
 }

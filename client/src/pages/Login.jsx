@@ -53,8 +53,8 @@ const Login = () => {
     <div
       style={{
         backgroundColor: "#223773",
-        minHeight: "100vh",
-        minWidth: "100vw",
+        height: "100vh",
+        width: "100vw",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -64,37 +64,31 @@ const Login = () => {
         padding: 0,
       }}
     >
+      {/* Logo no topo */}
+      <div
+      className="bg-white w-100 d-block position-absolute top-0"
+       style={{height:"80px"}}
+      >
+        <img
+          src={Syntrex}
+          alt="Syntrex"
+          style={{ height: "50px", marginRight: "8px",  position: "absolute",
+          top: "15px",
+          left: "40px",
+        
+          
+        }}
+          onError={(e) => {
+            // Esconde a imagem se não existir (evita overlay de erro do Vite)
+            e.currentTarget.style.display = 'none';
+          }}
+        />
+      </div>
+
       <Container
         className="d-flex flex-column justify-content-center align-items-center"
         style={{ textAlign: "center", maxWidth: "400px" }}
       >
-        {/* Logo no topo */}
-        <div
-          className="bg-white w-100 d-block position-absolute top-0"
-          style={{ height: "25px" }}
-        >
-          <img
-            src={Syntrex}
-            alt="Syntrex"
-            style={{
-              height: "58px",
-              maxHeight: "66px",
-              objectFit: "contain",
-              display: "block",
-              position: "absolute",
-              top: "0",
-              left: "0%",
-              right: "100%",
-              bottom: "0",
-              margin: "auto",
-              zIndex: "1",
-            }}
-            onError={(e) => {
-              e.currentTarget.style.display = "none";
-            }}
-          />
-        </div>
-
         <h2 style={{ color: "#fff", marginBottom: "30px", fontWeight: "700" }}>
           Acesse sua conta
         </h2>
@@ -127,6 +121,8 @@ const Login = () => {
                   value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/,
                   message: "Email inválido",
                 },
+                validate: (value) =>
+                  value.includes("@") || "Email deve possuir um @",
               })}
             />
             {errors.email && (
@@ -173,7 +169,7 @@ const Login = () => {
             style={{
               backgroundColor: "#009975",
               border: "none",
-              width: "100%",
+              width: "100%" ,
               height: "45px",
               borderRadius: "6px",
               fontWeight: "600",
@@ -197,29 +193,27 @@ const Login = () => {
           </div>
 
           {/* Alerta */}
-          <Alert
-            variant="danger"
-            className={alertaClasse}
-            style={{ marginTop: "20px" }}
-          >
+          <Alert variant="danger" className={alertaClasse} style={{ marginTop: "20px" }}>
             Usuário ou senha inválidos
           </Alert>
         </Form>
-
-        <p
-          style={{
-            position: "absolute",
-            bottom: "10px",
-            left: "10px",
-            color: "#b5b5b5",
-            fontSize: "12px",
-          }}
-        >
-          syntrex.com.br
-        </p>
       </Container>
+
+      {/* Rodapé */}
+      <p
+        style={{
+          position: "absolute",
+          bottom: "10px",
+          left: "10px",
+          color: "#b5b5b5",
+          fontSize: "12px",
+        }}
+      >
+        syntrex.com.br
+      </p>
     </div>
   );
 };
 
 export default Login;
+

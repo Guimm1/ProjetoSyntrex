@@ -1,113 +1,107 @@
-import React, { useEffect, useState } from "react";
-import { FiSearch } from "react-icons/fi";
-import styles from "./GerenciarFuncionarios.module.css";
-import { useDeletarFuncionario } from "../../hooks/useFuncionarios";
+import { useEffect, useState } from "react";
+import { useListaFuncionarios, useDeletarFuncionario } from "../../hooks/useFuncionarios";
 import { useNavigate } from "react-router-dom";
+import styles from "./GerenciarFuncionarios.module.css";
 
-const GerenciarFuncionarios = () => {
-  const [funcionarios, setFuncionarios] = useState([]);
-  const [busca, setBusca] = useState("");
+export default function GerenciarFuncionarios() {
   const navigate = useNavigate();
+
+  const listaFuncionarios = useListaFuncionarios();
   const { DeletarFuncionario } = useDeletarFuncionario();
 
+  const [funcionarios, setFuncionarios] = useState([]);
+  const [busca, setBusca] = useState("");
+  const [selecionado, setSelecionado] = useState(null);
+
+  // quando a lista mudar, atualiza
   useEffect(() => {
-    carregar();
-  }, []);
+    setFuncionarios(listaFuncionarios);
+  }, [listaFuncionarios]);
 
-  const carregar = async () => {
-    const res = await fetch("http://localhost:5000/funcionarios");
-    const data = await res.json();
-    setFuncionarios(data);
+  const editar = () => {
+    if (!selecionado) {
+      alert("Selecione um item para editar.");
+      return;
+    }
+
+    navigate(`/funcionarios/editar/${selecionado}`);
   };
 
-  const handleNovo = () => navigate("/funcionarios/cadastrar");
-  const handleEditar = () => {
-    const marcado = funcionarios.find((f) => f._selecionado);
-    if (!marcado) return alert("Selecione um funcionário!");
-    navigate(`/funcionarios/editar/${marcado.id}`);
+  const excluir = async () => {
+    if (!selecionado) {
+      alert("Selecione um item para excluir.");
+      return;
+    }
+
+    if (!confirm("Tem certeza que quer excluir este treinamento?")) return;
+
+    await DeletarFuncionario(selecionado);
+
+    setFuncionarios(funcionarios.filter((f) => f.id !== selecionado));
+    setSelecionado(null);
   };
 
-  const handleExcluir = async () => {
-    const marcado = funcionarios.find((f) => f._selecionado);
-    if (!marcado) return alert("Selecione um funcionário!");
-    await DeletarFuncionario(marcado.id);
-    carregar();
-  };
-
-  const handleCheck = (id) => {
-    setFuncionarios(
-      funcionarios.map((f) => ({
-        ...f,
-        _selecionado: f.id === id,
-      }))
-    );
-  };
-
+  // CORREÇÃO AQUI: trocado colaborador → nome
   const filtrados = funcionarios.filter((f) =>
-    f.nome?.toLowerCase().includes(busca.toLowerCase())
+    f.nome?.toLowerCase()?.includes(busca.toLowerCase())
   );
 
   return (
-    <div className={styles["container-pagina"]}>
-      <div className={styles["sidebar-placeholder"]} />
+    <div className={styles.container}>
+      <h1 className={styles.titulo}>Gerenciar funcionarios</h1>
 
-      <main className={styles["main-content"]}>
-        <h1 className={styles["titulo-pagina"]}>Gerenciar Funcionários</h1>
+      <input
+        type="text"
+        placeholder="Buscar colaborador..."
+        className={styles.busca}
+        value={busca}
+        onChange={(e) => setBusca(e.target.value)}
+      />
 
-        <div className={styles["search-wrapper"]}>
-          <div className={styles["search-box"]}>
-            <FiSearch size={18} />
-            <input
-              value={busca}
-              onChange={(e) => setBusca(e.target.value)}
-              placeholder="Buscar colaborador..."
-            />
-          </div>
-        </div>
+      <table className={styles.tabela}>
+        <thead>
+          <tr>
+            <th></th>
+            <th>NOME</th>
+            <th>FUNÇÃO</th>
+            <th>MATRÍCULA</th>
+          </tr>
+        </thead>
 
-        <div className={styles["table-container"]}>
-          <table>
-            <thead>
-              <tr>
-                <th></th>
-                <th>NOME</th>
-                <th>FUNÇÃO</th>
-                <th>MATRÍCULA</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtrados.map((f) => (
-                <tr key={f.id}>
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={f._selecionado || false}
-                      onChange={() => handleCheck(f.id)}
-                    />
-                  </td>
-                  <td>{f.nome}</td>
-                  <td>{f.funcao}</td>
-                  <td>{f.matricula}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <tbody>
+          {filtrados.map((f) => (
+            <tr key={f.id}>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={selecionado === f.id}
+                  onChange={() => setSelecionado(f.id)}
+                />
+              </td>
+              <td>{f.nome || "—"}</td>
+              <td>{f.funcao || "—"}</td>
+              <td>{f.matricula || "—"}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
-        <div className={styles["botoes-container"]}>
-          <button className={`${styles.btn} ${styles["btn-novo"]}`} onClick={handleNovo}>
-            Cadastrar Novo
-          </button>
-          <button className={`${styles.btn} ${styles["btn-editar"]}`} onClick={handleEditar}>
-            Editar
-          </button>
-          <button className={`${styles.btn} ${styles["btn-desativar"]}`} onClick={handleExcluir}>
-            Desativar
-          </button>
-        </div>
-      </main>
+      <div className={styles.botoes}>
+        <button
+          className={styles.cadastrar}
+          onClick={() => navigate("/funcionarios/cadastrar")}
+        >
+          Cadastrar Novo
+        </button>
+
+        <button className={styles.editar} onClick={editar}>
+          Editar
+        </button>
+
+        <button className={styles.excluir} onClick={excluir}>
+          Excluir
+        </button>
+      </div>
     </div>
   );
-};
-
-export default GerenciarFuncionarios;
+}
