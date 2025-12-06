@@ -196,7 +196,7 @@ const BarraNavegacao = () => {
 
        
          {/* Opção Relatórios */}
-        <Nav.Link as={NavLink} to="/relatorios" className="text-black px-2">
+        <Nav.Link as={NavLink} to="/PaginaErro" className="text-black px-2">
           <GoGear className="fs-4" />
           <span className="fs-5 ms-2">Configurações</span>
         </Nav.Link>
