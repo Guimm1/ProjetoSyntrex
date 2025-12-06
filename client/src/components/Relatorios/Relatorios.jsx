@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import Status from "../Status/Status";
+import computeStatus from "../../utils/computeStatus";
 import styles from "./Relatorios.module.css";
 
 const Relatorios = () => {
@@ -31,14 +32,15 @@ const Relatorios = () => {
       const funcionario = funcionarios.find(
         f => f.nome?.toLowerCase() === exame.colaborador?.toLowerCase()
       );
-
-      combinado.push({
-        nome: exame.colaborador || "—",
-        funcao: funcionario?.funcao || "—",
-        treinamento: "—",
-        exame: exame.nomeExame,
-        validade: exame.validade
-      });
+      
+        combinado.push({
+          nome: exame.colaborador || "—",
+          funcao: funcionario?.funcao || "—",
+          treinamento: "—",
+          exame: exame.nomeExame,
+          validade: exame.validade,
+          status: computeStatus(exame)
+        });
     });
 
     // --- Treinamentos ---
@@ -47,14 +49,15 @@ const Relatorios = () => {
       const funcionario = funcionarios.find(
         f => f.nome?.toLowerCase() === trein.colaborador?.toLowerCase()
       );
-
-      combinado.push({
-        nome: trein.colaborador || "—",
-        funcao: funcionario?.funcao || "—",
-        treinamento: trein.nomeTreinamento,
-        exame: "—",
-        validade: trein.validade
-      });
+      
+        combinado.push({
+          nome: trein.colaborador || "—",
+          funcao: funcionario?.funcao || "—",
+          treinamento: trein.nomeTreinamento,
+          exame: "—",
+          validade: trein.validade,
+          status: computeStatus(trein)
+        });
     });
 
     return combinado;
@@ -118,7 +121,7 @@ const Relatorios = () => {
                   <td>{item.funcao}</td>
                   <td>{item.treinamento}</td>
                   <td>{item.exame}</td>
-                  <td><Status validade={item.validade} /></td>
+                    <td><Status value={item.status} /></td>
                 </tr>
               ))}
             </tbody>

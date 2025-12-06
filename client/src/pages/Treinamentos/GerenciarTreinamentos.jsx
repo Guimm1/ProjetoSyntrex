@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useListaTreinamentos, useExcluirTreinamentos } from "../../hooks/useTreinamentos";
 import { useNavigate } from "react-router-dom";
 import styles from "./GerenciarTreinamentos.module.css";
+import computeStatus from "../../utils/computeStatus";
 
 export default function GerenciarTreinamentos() {
   const navigate = useNavigate();
@@ -29,14 +30,15 @@ export default function GerenciarTreinamentos() {
 
   const excluir = async () => {
     if (!selecionado) {
-      alert("Selecione um item para excluir.");
+      alert("Selecione um item para desativar.");
       return;
     }
 
-    if (!confirm("Tem certeza que quer excluir este treinamento?")) return;
+    if (!confirm("Tem certeza que quer desativar este treinamento?")) return;
 
     await ExcluirTreinamento(selecionado);
 
+    // Remover da lista de gerenciamento (mantém no banco para relatórios)
     setTreinamentos(treinamentos.filter((t) => t.id !== selecionado));
     setSelecionado(null);
   };
@@ -47,10 +49,12 @@ export default function GerenciarTreinamentos() {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case "VENCIDO":
+      case "PENDENTE":
         return styles.statusVencido;
       case "PRÓX DO VENCIMENTO":
         return styles.statusProximo;
+      case "CONCLUIDO":
+        return styles.statusConcluido;
       default:
         return styles.statusAberto;
     }
@@ -93,9 +97,14 @@ export default function GerenciarTreinamentos() {
               <td>{t.funcao || "—"}</td>
               <td>{t.nomeTreinamento || "—"}</td>
               <td>
-                <span className={`${styles.status} ${getStatusColor(t.status)}`}>
-                  {t.status || "EM ABERTO"}
-                </span>
+                {(() => {
+                  const statusAtual = computeStatus(t, 30);
+                  return (
+                    <span className={`${styles.status} ${getStatusColor(statusAtual)}`}>
+                      {statusAtual}
+                    </span>
+                  );
+                })()}
               </td>
             </tr>
           ))}
@@ -115,7 +124,7 @@ export default function GerenciarTreinamentos() {
         </button>
 
         <button className={styles.excluir} onClick={excluir}>
-          Excluir
+          Desativar
         </button>
       </div>
     </div>

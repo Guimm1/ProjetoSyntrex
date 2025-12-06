@@ -3,6 +3,7 @@ import { useListaExames, useExcluirExames } from "../../hooks/useExames";
 import { useListaFuncionarios } from "../../hooks/useFuncionarios";
 import { useNavigate } from "react-router-dom";
 import styles from "./GerenciarExames.module.css";
+import computeStatus from "../../utils/computeStatus";
 
 export default function GerenciarExames() {
   const navigate = useNavigate();
@@ -31,14 +32,15 @@ export default function GerenciarExames() {
 
   const excluir = async () => {
     if (!selecionado) {
-      alert("Selecione um item para excluir.");
+      alert("Selecione um item para desativar.");
       return;
     }
 
-    if (!confirm("Tem certeza que quer excluir este exame?")) return;
+    if (!confirm("Tem certeza que quer desativar este exame?")) return;
 
     await ExcluirExame(selecionado);
 
+    // Remover da lista de gerenciamento (mantém no banco para relatórios)
     setExames(exames.filter((e) => e.id !== selecionado));
     setSelecionado(null);
   };
@@ -49,10 +51,12 @@ export default function GerenciarExames() {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case "VENCIDO":
+      case "PENDENTE":
         return styles.statusVencido;
       case "PRÓX DO VENCIMENTO":
         return styles.statusProximo;
+      case "CONCLUIDO":
+        return styles.statusConcluido;
       default:
         return styles.statusAberto;
     }
@@ -105,9 +109,14 @@ export default function GerenciarExames() {
               <td>{obterFuncao(e.colaborador, e.funcao)}</td>
               <td>{e.nomeExame || "—"}</td>
               <td>
-                <span className={`${styles.status} ${getStatusColor(e.status)}`}>
-                  {e.status || "EM ABERTO"}
-                </span>
+                {(() => {
+                  const statusAtual = computeStatus(e, 30);
+                  return (
+                    <span className={`${styles.status} ${getStatusColor(statusAtual)}`}>
+                      {statusAtual}
+                    </span>
+                  );
+                })()}
               </td>
             </tr>
           ))}
@@ -127,7 +136,7 @@ export default function GerenciarExames() {
         </button>
 
         <button className={styles.excluir} onClick={excluir}>
-          Excluir
+          Desativar
         </button>
       </div>
     </div>

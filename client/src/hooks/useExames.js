@@ -12,7 +12,8 @@ export function useListaExames() {
       try {
         const req = await fetch(`${url}/exames`);
         const res = await req.json();
-        setExames(res);
+        // Retornar apenas exames ativos (active !== false)
+        setExames(res.filter((e) => e.active !== false));
       } catch (erro) {
         console.log("Erro ao carregar exame:", erro.message);
       }
@@ -48,6 +49,8 @@ export function useListaCategoriaExames() {
 export function useCadastrarExame() {
   const CadastrarExame = async (data) => {
     try {
+      // garantir que novo registro seja marcado como ativo
+      if (data.active === undefined) data.active = true;
       // Alterado de /cadastroexame → /exames (rota do json-server)
       const req = await fetch(`${url}/exames`, {
         method: "POST",
@@ -102,18 +105,21 @@ export function useEditarExames() {
 export function useExcluirExames() {
   const ExcluirExame = async (id) => {
     try {
+      // Desativar em vez de excluir
       const req = await fetch(`${url}/exames/${id}`, {
-        method: "DELETE",
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ active: false }),
       });
 
       if (!req.ok) {
-        console.error("Erro ao excluir exame:", req.status);
+        console.error("Erro ao desativar exame:", req.status);
         return;
       }
 
-      console.log(`Exame ${id} excluído com sucesso`);
+      console.log(`Exame ${id} desativado com sucesso`);
     } catch (erro) {
-      console.error("Erro ao excluir:", erro.message);
+      console.error("Erro ao desativar:", erro.message);
     }
   };
 

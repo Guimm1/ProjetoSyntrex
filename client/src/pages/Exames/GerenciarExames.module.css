@@ -60,6 +60,10 @@
   .statusAberto {
     background: #c1bfb5;
   }
+
+  .statusConcluido {
+    background: #8fe39e;
+  }
   
   .botoes {
     display: flex;

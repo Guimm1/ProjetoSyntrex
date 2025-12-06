@@ -38,7 +38,15 @@ const CadastroExames = () => {
       const res = await fetch(`http://localhost:5000/exames/${id}`);
       if (!res.ok) throw new Error("Erro ao buscar exame");
       const dados = await res.json();
-      setExame(dados); // <<< SALVA O TREINAMENTO
+      // Garantir que o campo nomeExame corresponda ao ID da categoria
+      if (dados && dados.nomeExame) {
+        const cat = categoriasExames.find((c) => String(c.nome) === String(dados.nomeExame));
+        if (cat) {
+          dados.nomeExame = String(cat.id);
+        }
+      }
+
+      setExame(dados); // <<< SALVA O EXAME
     } catch (error) {
       alert("Erro ao carregar dados do exame para edição");
     } finally {
@@ -59,6 +67,19 @@ const CadastroExames = () => {
     }
   }, [exame, reset]);
 
+  // Se as categorias chegarem depois do exame, garantir que o select
+  // mostre a opção correta (converter nome -> id)
+  useEffect(() => {
+    if (exame && categoriasExames && categoriasExames.length) {
+      const atual = exame;
+      const found = categoriasExames.find((c) => String(c.nome) === String(atual.nomeExame));
+      if (found && String(atual.nomeExame) !== String(found.id)) {
+        atual.nomeExame = String(found.id);
+        reset(atual);
+      }
+    }
+  }, [categoriasExames, exame, reset]);
+
   // Quando o colaborador mudar, atualizar a função
   useEffect(() => {
     if (colaboradorSelecionado) {
@@ -73,26 +94,44 @@ const CadastroExames = () => {
 
   // Ao salvar
   const onSubmit = async (data) => {
-    // Converter ID para nome do exame
-    const exameSelecionado = categoriasExames.find(e => e.id === parseInt(data.nomeExame));
+    // Validar se colaborador foi selecionado
+    if (!data.colaborador) {
+      alert("Por favor, selecione um colaborador!");
+      return;
+    }
+
+    // Converter ID para nome do exame (comparar como string)
+    const exameSelecionado = categoriasExames.find(e => String(e.id) === String(data.nomeExame));
+    
+    // Validar se exame foi selecionado
+    if (!exameSelecionado) {
+      alert("Por favor, selecione um exame válido!");
+      return;
+    }
     
     // Validar duplicidade: mesmo funcionário não pode ter o mesmo exame
-    if (!id && data.colaborador && exameSelecionado) {
+    if (!id) {
       const existe = examesListados.some(
         ex => ex.colaborador === data.colaborador && ex.nomeExame === exameSelecionado.nome
       );
       
       if (existe) {
-        alert("Este colaborador já possui este exame cadastrado!");
+        alert(`O exame "${exameSelecionado.nome}" já está cadastrado para o funcionário ${data.colaborador}!`);
         return;
       }
     }
 
     // Substituir ID pelo nome do exame
-    data.nomeExame = exameSelecionado?.nome || data.nomeExame;
+    data.nomeExame = exameSelecionado.nome;
 
     // Adicionar a função ao objeto de dados
     data.funcao = funcaoSelecionada;
+    
+    // Se for novo, definir status inicial e createdAt
+    if (!id) {
+      data.status = data.status || "EM ABERTO";
+      data.createdAt = new Date().toISOString();
+    }
     
     if (id) {
       const res = await EditarExame(id, data);
@@ -341,6 +380,49 @@ const CadastroExames = () => {
           </div>
 
           {/* Botão SALVAR */}
+          {id && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+                maxWidth: "600px",
+                gap: "20px",
+              }}
+            >
+              <Form.Label
+                style={{
+                  flex: "0 0 230px",
+                  textAlign: "right",
+                  fontWeight: "500",
+                  fontSize: "18px",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                Status
+              </Form.Label>
+              <Form.Select
+                {...register("status")}
+                style={{
+                  flex: "1",
+                  height: "50px",
+                  minWidth: "350px",
+                  fontSize: "16px",
+                  borderRadius: "8px",
+                  border: "1px solid #fff",
+                  padding: "10px 14px",
+                  backgroundColor: "white",
+                  color: "#000",
+                  width: "100%",
+                }}
+              >
+                <option value="EM ABERTO">EM ABERTO</option>
+                <option value="PRÓX DO VENCIMENTO">PRÓX DO VENCIMENTO</option>
+                <option value="PENDENTE">PENDENTE</option>
+                <option value="CONCLUIDO">CONCLUIDO</option>
+              </Form.Select>
+            </div>
+          )}
           <Button
             type="submit"
             style={{

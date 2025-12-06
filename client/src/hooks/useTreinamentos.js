@@ -12,7 +12,8 @@ export function useListaTreinamentos() {
       try {
         const req = await fetch(`${url}/treinamentos`);
         const res = await req.json();
-        setTreinamentos(res);
+        // Retornar apenas treinamentos ativos (active !== false)
+        setTreinamentos(res.filter((t) => t.active !== false));
       } catch (erro) {
         console.log("Erro ao carregar treinamentos:", erro.message);
       }
@@ -49,6 +50,8 @@ export function useListaCategoriaTrainamentos() {
 export function useCadastrarTreinamentos() {
   const CadastrarTreinamento = async (data) => {
     try {
+      // garantir que novo registro seja marcado como ativo
+      if (data.active === undefined) data.active = true;
       const req = await fetch(`${url}/treinamentos`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -102,18 +105,21 @@ export function useEditarTreinamentos() {
 export function useExcluirTreinamentos() {
   const ExcluirTreinamento = async (id) => {
     try {
+      // realizar PATCH definindo active=false (desativar)
       const req = await fetch(`${url}/treinamentos/${id}`, {
-        method: "DELETE",
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ active: false }),
       });
 
       if (!req.ok) {
-        console.error("Erro ao excluir treinamento:", req.status);
+        console.error("Erro ao desativar treinamento:", req.status);
         return;
       }
 
-      console.log(`Treinamento ${id} excluído com sucesso`);
+      console.log(`Treinamento ${id} desativado com sucesso`);
     } catch (erro) {
-      console.error("Erro ao excluir:", erro.message);
+      console.error("Erro ao desativar:", erro.message);
     }
   };
 

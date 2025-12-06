@@ -1,36 +1,26 @@
-.page {
-  min-height: 100vh;
-  background-color: #223773;
-  padding: 20px;
-}
-
 .badge {
   display: inline-block;
-  padding: 8px 12px;
-  border-radius: 10px;
+  padding: 6px 12px;
+  border-radius: 8px;
   font-weight: 700;
   font-size: 12px;
   text-transform: uppercase;
-  min-width: 120px;
   text-align: center;
+  color: #000;
 }
 
 .concluido {
-  background: #8be28c;
-  color: #0f4f0f;
+  background: #8fe39e;
 }
 
 .vencimento {
-  background: #fff1b8;
-  color: #7a6400;
+  background: #f7e86b;
 }
 
 .pendente {
-  background: #ffb3b3;
-  color: #8b0000;
+  background: #ff6b6b;
 }
 
 .emAberto {
-  background: #dfdfdf;
-  color: #444;
+  background: #c1bfb5;
 }
