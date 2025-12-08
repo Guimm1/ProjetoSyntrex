@@ -70,11 +70,17 @@ export default function GerenciarExames() {
   });
 
       const getStatusColor = (status) => {
-    switch (status) {
+    // Mapear status interno para display correto
+    let displayStatus = status;
+    
+    // "EM ABERTO" → exibir como "EM DIA"
+    if (status === "EM ABERTO") displayStatus = "EM DIA";
+    // "PENDENTE" → exibir como "VENCIDO"
+    else if (status === "PENDENTE") displayStatus = "VENCIDO";
+    
+    switch (displayStatus) {
       case "VENCIDO":
         return styles.statusVencido;      // vermelho
-      case "PENDENTE":
-        return styles.statusPendente;     // cinza
       case "PRÓX DO VENCIMENTO":
         return styles.statusProximo;      // amarelo
       case "CONCLUIDO":
@@ -84,6 +90,13 @@ export default function GerenciarExames() {
       default:
         return styles.statusAberto;       // cinza
     }
+  };
+
+  const getStatusDisplay = (status) => {
+    // Converter status para display correto
+    if (status === "EM ABERTO") return "EM DIA";
+    if (status === "PENDENTE") return "VENCIDO";
+    return status;
   };
 
   // Função para obter a função do colaborador
@@ -145,7 +158,7 @@ export default function GerenciarExames() {
                   const statusAtual = computeStatus(e, 30);
                   return (
                     <span className={`${styles.status} ${getStatusColor(statusAtual)}`}>
-                      {statusAtual}
+                      {getStatusDisplay(statusAtual)}
                     </span>
                   );
                 })()}

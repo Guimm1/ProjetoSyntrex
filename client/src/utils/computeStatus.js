@@ -13,8 +13,12 @@ export function computeStatus(record, thresholdDays = 30) {
 
   const statusField = String(record.status || "").toUpperCase();
 
-  // Override manual: concluído sempre vence tudo
+  // Override manual: se o status foi definido manualmente, retornar como está
+  // Esses são os status que podem ser definidos manualmente no formulário de edição
   if (statusField === "CONCLUIDO") return "CONCLUIDO";
+  if (statusField === "PENDENTE") return "PENDENTE";
+  if (statusField === "EM ABERTO") return "EM ABERTO";
+  if (statusField === "PRÓX DO VENCIMENTO") return "PRÓX DO VENCIMENTO";
 
   const createdAt = record.createdAt ? new Date(record.createdAt) : null;
   const validadeMonths =

@@ -42,7 +42,7 @@
       "descricao": "Admissao",
       "validade": "1",
       "funcao": "Operador",
-      "status": "PRÓX DO VENCIMENTO"
+      "status": "EM ABERTO"
     },
     {
       "id": "c8ab",
@@ -51,7 +51,7 @@
       "descricao": "dificil",
       "validade": "0",
       "funcao": "Operador",
-      "status": "EM ABERTO",
+      "status": "PRÓX DO VENCIMENTO",
       "createdAt": "2025-12-06T20:51:19.702Z",
       "active": true
     },
@@ -64,6 +64,17 @@
       "funcao": "Operador",
       "status": "EM ABERTO",
       "createdAt": "2025-12-06T21:32:18.668Z",
+      "active": true
+    },
+    {
+      "id": "8ce3",
+      "colaborador": "Pedro",
+      "nomeExame": "Hemograma",
+      "descricao": "exame importante",
+      "validade": "2",
+      "funcao": "Desenvolvedor",
+      "status": "CONCLUIDO",
+      "createdAt": "2025-12-08T21:48:14.793Z",
       "active": true
     }
   ],
@@ -335,6 +346,12 @@
       "nome": "Gustavo ",
       "matricula": "37444",
       "funcao": "Dono"
+    },
+    {
+      "id": "bf0f",
+      "nome": "Pedro",
+      "matricula": "6789",
+      "funcao": "Desenvolvedor"
     }
   ],
   "treinamentos": [
@@ -359,7 +376,7 @@
       "descricao": "nr10",
       "validade": "-11",
       "funcao": "Operador",
-      "status": "PENDENTE"
+      "status": "PRÓX DO VENCIMENTO"
     },
     {
       "id": "e175",
@@ -368,7 +385,7 @@
       "descricao": "dificil",
       "validade": "4",
       "funcao": "Dono",
-      "status": "CONCLUIDO",
+      "status": "PRÓX DO VENCIMENTO",
       "createdAt": "2024-12-06T20:34:14.288Z",
       "active": true
     },
@@ -390,7 +407,7 @@
       "descricao": "branco",
       "validade": "1",
       "funcao": "pedreiro",
-      "status": "EM ABERTO",
+      "status": "CONCLUIDO",
       "createdAt": "2025-12-06T20:48:53.058Z",
       "active": true
     },
