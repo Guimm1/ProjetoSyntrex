@@ -161,7 +161,7 @@ export default function GerenciarTreinamentos() {
         </button>
 
         <button className={styles.excluir} onClick={excluir}>
-          Desativar
+          Excluir
         </button>
       </div>
     </div>

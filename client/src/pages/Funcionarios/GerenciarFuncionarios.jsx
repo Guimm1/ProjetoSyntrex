@@ -107,7 +107,7 @@ export default function GerenciarFuncionarios() {
         </button>
 
         <button className={styles.excluir} onClick={excluir}>
-          Excluir
+          Desativar
         </button>
       </div>
     </div>

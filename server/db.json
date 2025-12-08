@@ -4,7 +4,7 @@
       "id": "1",
       "nome": "Gustavo",
       "email": "gustavoblazechi@gmail.com",
-      "senha": "37",
+      "senha": "381",
       "tipo": "Administrador",
       "imagemUrl": "https://img.freepik.com/vetores-premium/icone-de-perfil-de-usuario-em-estilo-plano-ilustracao-em-vetor-avatar-membro-em-fundo-isolado-conceito-de-negocio-de-sinal-de-permissao-humana_157943-15752.jpg?semt=ais_hybrid&w=740&q=80"
     },
@@ -339,7 +339,8 @@
   ],
   "treinamentos": [
     {
-      "id": "2be6"
+      "id": "2be6",
+      "active": false
     },
     {
       "id": "2d67",
