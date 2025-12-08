@@ -33,14 +33,27 @@ const Relatorios = () => {
       const funcionario = funcionarios.find(
         f => f.nome?.toLowerCase() === exame.colaborador?.toLowerCase()
       );
-      
+
+        // calcular status e, se concluído, anexar data de conclusão
+        const st = computeStatus(exame);
+        // ignorar registros marcados 'CONCLUIDO' sem completedAt
+        if (st === "CONCLUIDO" && !exame.completedAt) return;
+        let statusDisplay = st;
+        if (st === "CONCLUIDO" && exame.completedAt) {
+          const d = new Date(exame.completedAt);
+          const dd = String(d.getDate()).padStart(2, "0");
+          const mm = String(d.getMonth() + 1).padStart(2, "0");
+          const yyyy = d.getFullYear();
+          statusDisplay = `CONCLUIDO em ${dd}/${mm}/${yyyy}`;
+        }
+
         combinado.push({
           nome: exame.colaborador || "—",
           funcao: funcionario?.funcao || "—",
           treinamento: "—",
           exame: exame.nomeExame,
           validade: exame.validade,
-          status: computeStatus(exame),
+          status: statusDisplay,
           active: exame.active === undefined ? true : exame.active
         });
     });
@@ -51,14 +64,26 @@ const Relatorios = () => {
       const funcionario = funcionarios.find(
         f => f.nome?.toLowerCase() === trein.colaborador?.toLowerCase()
       );
-      
+
+        const st = computeStatus(trein);
+        // ignorar registros marcados 'CONCLUIDO' sem completedAt
+        if (st === "CONCLUIDO" && !trein.completedAt) return;
+        let statusDisplay = st;
+        if (st === "CONCLUIDO" && trein.completedAt) {
+          const d = new Date(trein.completedAt);
+          const dd = String(d.getDate()).padStart(2, "0");
+          const mm = String(d.getMonth() + 1).padStart(2, "0");
+          const yyyy = d.getFullYear();
+          statusDisplay = `CONCLUIDO em ${dd}/${mm}/${yyyy}`;
+        }
+
         combinado.push({
           nome: trein.colaborador || "—",
           funcao: funcionario?.funcao || "—",
           treinamento: trein.nomeTreinamento,
           exame: "—",
           validade: trein.validade,
-          status: computeStatus(trein),
+          status: statusDisplay,
           active: trein.active === undefined ? true : trein.active
         });
     });

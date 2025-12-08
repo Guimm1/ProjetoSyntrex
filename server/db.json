@@ -4,7 +4,7 @@
       "id": "1",
       "nome": "Gustavo",
       "email": "gustavoblazechi@gmail.com",
-      "senha": "381",
+      "senha": "123",
       "tipo": "Administrador",
       "imagemUrl": "https://img.freepik.com/vetores-premium/icone-de-perfil-de-usuario-em-estilo-plano-ilustracao-em-vetor-avatar-membro-em-fundo-isolado-conceito-de-negocio-de-sinal-de-permissao-humana_157943-15752.jpg?semt=ais_hybrid&w=740&q=80"
     },
@@ -36,15 +36,6 @@
       "active": false
     },
     {
-      "id": "d7bf",
-      "colaborador": "Guilherme Galvao",
-      "nomeExame": "Exame Admissional",
-      "descricao": "Admissao",
-      "validade": "1",
-      "funcao": "Operador",
-      "status": "EM ABERTO"
-    },
-    {
       "id": "c8ab",
       "colaborador": "Guilherme Galvao",
       "nomeExame": "Glicemia",
@@ -67,15 +58,16 @@
       "active": true
     },
     {
-      "id": "8ce3",
-      "colaborador": "Pedro",
-      "nomeExame": "Hemograma",
-      "descricao": "exame importante",
-      "validade": "2",
-      "funcao": "Desenvolvedor",
+      "id": "73e6",
+      "colaborador": "Guilherme Galvao",
+      "nomeExame": "Teste de Visão",
+      "descricao": "teste de vista",
+      "validade": "1",
+      "funcao": "Operador",
       "status": "CONCLUIDO",
-      "createdAt": "2025-12-08T21:48:14.793Z",
-      "active": true
+      "createdAt": "2025-12-08T22:46:19.782Z",
+      "active": true,
+      "completedAt": "2025-12-08T22:46:36.388Z"
     }
   ],
   "categoriasExames": [
@@ -360,23 +352,14 @@
       "active": false
     },
     {
-      "id": "2d67",
-      "colaborador": "Guilherme Galvao",
-      "nomeTreinamento": "NR13 - Caldeiras, Vasos de Pressão e Tubulações",
-      "descricao": "NR",
-      "validade": "1",
-      "funcao": "Operador",
-      "status": "CONCLUIDO",
-      "active": false
-    },
-    {
       "id": "1071",
       "colaborador": "Guilherme Galvao",
       "nomeTreinamento": "NR10 - Segurança em Instalações e Serviços com Eletricidade",
       "descricao": "nr10",
       "validade": "-11",
       "funcao": "Operador",
-      "status": "PRÓX DO VENCIMENTO"
+      "status": "CONCLUIDO",
+      "completedAt": "2025-12-08T22:40:46.157Z"
     },
     {
       "id": "e175",
@@ -385,9 +368,10 @@
       "descricao": "dificil",
       "validade": "4",
       "funcao": "Dono",
-      "status": "PRÓX DO VENCIMENTO",
+      "status": "CONCLUIDO",
       "createdAt": "2024-12-06T20:34:14.288Z",
-      "active": true
+      "active": true,
+      "completedAt": "2025-12-08T22:41:18.424Z"
     },
     {
       "id": "0dae",
@@ -401,17 +385,6 @@
       "active": true
     },
     {
-      "id": "3c86",
-      "colaborador": "Guilherme Magri",
-      "nomeTreinamento": "NR13 - Caldeiras, Vasos de Pressão e Tubulações",
-      "descricao": "branco",
-      "validade": "1",
-      "funcao": "pedreiro",
-      "status": "CONCLUIDO",
-      "createdAt": "2025-12-06T20:48:53.058Z",
-      "active": true
-    },
-    {
       "id": "cfa5",
       "colaborador": "Guilherme Galvao",
       "nomeTreinamento": "NR11 - Transporte, Movimentação, Armazenagem e Manipulação de Materiais",
@@ -421,6 +394,18 @@
       "status": "EM ABERTO",
       "createdAt": "2025-12-06T20:49:04.026Z",
       "active": true
+    },
+    {
+      "id": "7988",
+      "colaborador": "Guilherme Magri",
+      "nomeTreinamento": "NR17 - Ergonomia",
+      "descricao": "para a coluna",
+      "validade": "1",
+      "funcao": "pedreiro",
+      "status": "CONCLUIDO",
+      "createdAt": "2025-12-08T22:47:05.030Z",
+      "active": true,
+      "completedAt": "2025-12-08T22:47:43.479Z"
     }
   ]
 }

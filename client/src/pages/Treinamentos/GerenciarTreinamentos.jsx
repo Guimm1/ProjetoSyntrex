@@ -149,9 +149,18 @@ export default function GerenciarTreinamentos() {
               <td>
                 {(() => {
                   const statusAtual = computeStatus(t, 30);
+                  let display = getStatusDisplay(statusAtual);
+                  if (statusAtual === "CONCLUIDO" && t.completedAt) {
+                    const d = new Date(t.completedAt);
+                    const dd = String(d.getDate()).padStart(2, "0");
+                    const mm = String(d.getMonth() + 1).padStart(2, "0");
+                    const yyyy = d.getFullYear();
+                    display = `CONCLUIDO em ${dd}/${mm}/${yyyy}`;
+                  }
+
                   return (
                     <span className={`${styles.status} ${getStatusColor(statusAtual)}`}>
-                      {getStatusDisplay(statusAtual)}
+                      {display}
                     </span>
                   );
                 })()}

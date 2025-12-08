@@ -134,9 +134,22 @@ const CadastroTreinamento = () => {
     if (!id) {
       data.status = data.status || "EM ABERTO";
       data.createdAt = new Date().toISOString();
+      if (String(data.status).toUpperCase() === "CONCLUIDO") {
+        data.completedAt = new Date().toISOString();
+      }
     }
-    
+
     if (id) {
+      // impedir remoção do status CONCLUIDO caso já esteja concluído
+      if (treinamento && String(treinamento.status).toUpperCase() === "CONCLUIDO") {
+        data.status = "CONCLUIDO";
+        if (treinamento.completedAt) data.completedAt = treinamento.completedAt;
+      } else if (String(data.status).toUpperCase() === "CONCLUIDO") {
+        data.completedAt = new Date().toISOString();
+      } else {
+        if (data.completedAt) delete data.completedAt;
+      }
+
       const res = await EditarTreinamento(id, data);
       if (res) {
         alert("Treinamento atualizado com sucesso!");

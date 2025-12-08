@@ -156,9 +156,19 @@ export default function GerenciarExames() {
               <td>
                 {(() => {
                   const statusAtual = computeStatus(e, 30);
+                  // Se concluído, mostrar a data de conclusão (se existir)
+                  let display = getStatusDisplay(statusAtual);
+                  if (statusAtual === "CONCLUIDO" && e.completedAt) {
+                    const d = new Date(e.completedAt);
+                    const dd = String(d.getDate()).padStart(2, "0");
+                    const mm = String(d.getMonth() + 1).padStart(2, "0");
+                    const yyyy = d.getFullYear();
+                    display = `CONCLUIDO em ${dd}/${mm}/${yyyy}`;
+                  }
+
                   return (
                     <span className={`${styles.status} ${getStatusColor(statusAtual)}`}>
-                      {getStatusDisplay(statusAtual)}
+                      {display}
                     </span>
                   );
                 })()}

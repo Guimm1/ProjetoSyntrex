@@ -31,8 +31,8 @@ const CadastroExames = () => {
 
   const colaboradorSelecionado = watch("colaborador");
 
-   // Buscar dados do treinamento ANTES de montar o form
-   async function buscarExamePorId(id) {
+  // Buscar dados do exame ANTES de montar o form
+  async function buscarExamePorId(id) {
     try {
       setCarregando(true);
       const res = await fetch(`http://localhost:5000/exames/${id}`);
@@ -128,28 +128,40 @@ const CadastroExames = () => {
     data.funcao = funcaoSelecionada;
     
     // Se for novo, definir status inicial e createdAt
-    if (!id) {
-      data.status = data.status || "EM ABERTO";
-      data.createdAt = new Date().toISOString();
-    }
+      if (!id) {
+        data.status = data.status || "EM ABERTO";
+        data.createdAt = new Date().toISOString();
+        if (String(data.status).toUpperCase() === "CONCLUIDO") {
+          data.completedAt = new Date().toISOString();
+        }
+      }
     
-    if (id) {
-      const res = await EditarExame(id, data);
-      if (res) {
-        alert("Exame atualizado com sucesso!");
-        navigate("/exames/gerenciar");
+      if (id) {
+        if (exame && String(exame.status).toUpperCase() === "CONCLUIDO") {
+          data.status = "CONCLUIDO";
+          if (exame.completedAt) data.completedAt = exame.completedAt;
+        } else if (String(data.status).toUpperCase() === "CONCLUIDO") {
+          data.completedAt = new Date().toISOString();
+        } else {
+          if (data.completedAt) delete data.completedAt;
+        }
+
+        const res = await EditarExame(id, data);
+        if (res) {
+          alert("Exame atualizado com sucesso!");
+          navigate("/exames/gerenciar");
+        } else {
+          alert("Erro ao atualizar exame");
+        }
       } else {
-        alert("Erro ao atualizar exame");
+        const res = await CadastrarExame(data);
+        if (res) {
+          alert("Exame atribuido com sucesso!");
+          navigate("/exames/gerenciar");
+        } else {
+          alert("Erro ao cadastrar exame");
+        }
       }
-    } else {
-      const res = await CadastrarExame(data);
-      if (res) {
-        alert("Exame atribuido com sucesso!");
-        navigate("/exames/gerenciar");
-      } else {
-        alert("Erro ao cadastrar exame");
-      }
-    }
   };
 
   if (carregando) {
